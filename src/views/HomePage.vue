@@ -182,7 +182,7 @@ const goToPage = (route: string) => {
           <div class="md:w-1/2">
             <h2 class="text-3xl font-bold text-secondary-800 mb-4">Nossa História</h2>
             <p class="text-lg text-secondary-600 mb-6">
-              O Grupo de voluntários noo Canil/Gatil Municipal do Seixal tem uma história de dedicação e amor pelos animais.
+              O Grupo de voluntários no Canil/Gatil Municipal do Seixal tem uma história de dedicação e amor pelos animais.
               Desde a sua fundação, já ajudámos centenas de animais a encontrar um lar amoroso.
             </p>
             <button @click="goToPage('/historia')" class="btn btn-primary">
@@ -191,7 +191,8 @@ const goToPage = (route: string) => {
           </div>
           <div class="md:w-1/2">
             <div class="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-xl">
-              <img src="https://images.pexels.com/photos/1350593/pexels-photo-1350593.jpeg" alt="Shelter History" 
+            
+              <img src="https://images.pexels.com/photos/12195429/pexels-photo-12195429.jpeg" alt="Dogs in Animal Shelter" 
                 class="w-full h-full object-cover" />
             </div>
           </div>

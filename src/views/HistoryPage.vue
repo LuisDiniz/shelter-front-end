@@ -20,13 +20,13 @@ const milestones = ref([
     year: 2012,
     title: 'Novas Instalações',
     description: 'Graças ao apoio da Câmara Municipal do Seixal e de doações privadas, conseguimos mudar para instalações maiores e mais adequadas.',
-    imageUrl: 'https://images.pexels.com/photos/6816860/pexels-photo-6816860.jpeg'
+    imageUrl: 'https://images.pexels.com/photos/18268400/pexels-photo-18268400.jpeg'
   },
   {
     year: 2015,
     title: 'Programa de Apadrinhamento',
     description: 'Lançamos o programa de apadrinhamento, permitindo que pessoas que não podem adotar possam ainda assim contribuir para o bem-estar de um animal específico.',
-    imageUrl: 'https://images.pexels.com/photos/6131784/pexels-photo-6131784.jpeg'
+    imageUrl: 'https://images.pexels.com/photos/1444321/pexels-photo-1444321.jpeg'
   },
   {
     year: 2018,
@@ -38,13 +38,13 @@ const milestones = ref([
     year: 2020,
     title: 'Aniversário de 10 Anos',
     description: 'Celebramos uma década de trabalho com um grande evento virtual durante a pandemia, conseguindo angariar fundos significativos para o abrigo.',
-    imageUrl: 'https://images.pexels.com/photos/5255651/pexels-photo-5255651.jpeg'
+    imageUrl: 'https://images.pexels.com/photos/6646865/pexels-photo-6646865.jpeg'
   },
   {
     year: 2023,
     title: 'Expansão das Instalações',
     description: 'Inauguramos uma nova área dedicada exclusivamente aos gatos e um espaço para reabilitação de animais com necessidades especiais.',
-    imageUrl: 'https://images.pexels.com/photos/3777622/pexels-photo-3777622.jpeg'
+    imageUrl: 'https://images.pexels.com/photos/17036739/pexels-photo-17036739.jpeg'
   }
 ])
 
@@ -115,7 +115,7 @@ const testimonials = ref([
         <div class="bg-primary-50 rounded-lg p-8 border border-primary-100">
           <div class="flex flex-col md:flex-row gap-8 items-center">
             <div class="md:w-1/3">
-              <img src="https://images.pexels.com/photos/5255169/pexels-photo-5255169.jpeg" alt="Nossa Missão" 
+              <img src="https://images.pexels.com/photos/7474346/pexels-photo-7474346.jpeg" alt="Nossa Missão" 
                 class="rounded-lg shadow-md w-full h-auto object-cover aspect-square" />
             </div>
             <div class="md:w-2/3">
