@@ -48,26 +48,6 @@ const milestones = ref([
   }
 ])
 
-const testimonials = ref([
-  {
-    name: 'Ana Silva',
-    role: 'Voluntária desde 2015',
-    quote: 'Ver a transformação dos animais desde que chegam assustados até encontrarem uma família é a melhor recompensa.',
-    imageUrl: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg'
-  },
-  {
-    name: 'João Pereira',
-    role: 'Adotante',
-    quote: 'Adotar o Max foi uma das melhores decisões da minha vida. A equipe do abrigo foi incrível em todo o processo.',
-    imageUrl: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg'
-  },
-  {
-    name: 'Maria Rodrigues',
-    role: 'Fundadora',
-    quote: 'Quando começamos, nunca imaginei que chegaríamos tão longe. Ver o impacto que tivemos na comunidade é emocionante.',
-    imageUrl: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg'
-  }
-])
 </script>
 
 <template>
@@ -161,31 +141,6 @@ const testimonials = ref([
               <h3 class="text-xl font-semibold text-secondary-800 mb-2">{{ milestone.title }}</h3>
               <p class="text-secondary-700">{{ milestone.description }}</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials -->
-      <section>
-        <h2 class="text-2xl font-bold text-secondary-800 mb-8 text-center">Depoimentos</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div 
-            v-for="(testimonial, index) in testimonials" 
-            :key="`testimonial-${index}`"
-            class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-          >
-            <div class="flex items-center mb-4">
-              <img :src="testimonial.imageUrl" :alt="testimonial.name" 
-                class="w-12 h-12 rounded-full object-cover mr-4" />
-              <div>
-                <h3 class="font-semibold text-secondary-800">{{ testimonial.name }}</h3>
-                <p class="text-sm text-secondary-600">{{ testimonial.role }}</p>
-              </div>
-            </div>
-            <p class="italic text-secondary-700">
-              "{{ testimonial.quote }}"
-            </p>
           </div>
         </div>
       </section>

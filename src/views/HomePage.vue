@@ -53,7 +53,7 @@ const goToPage = (route: string) => {
           Ajude-nos a transformar <span class="text-primary-400">vidas</span>
         </h1>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-slide-up">
-          O Canil/Gatil Municipal do Seixal acolhe animais abandonados e trabalha para encontrar lares permanentes para eles.
+          Os voluntários do Canil/Gatil Municipal do Seixal acolhem animais abandonados e trabalham para encontrar lares para eles.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up">
           <router-link to="/animais" class="btn btn-primary text-lg px-8 py-3">
