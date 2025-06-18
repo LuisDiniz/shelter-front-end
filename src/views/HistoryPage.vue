@@ -2,49 +2,43 @@
 import { ref, onMounted } from 'vue'
 
 const shelterInfo = ref({
-  foundingYear: 2010,
+  foundingYear: 1998,
   totalAnimalsHelped: 3500,
-  currentAnimals: 120,
+  currentAnimals: 80,
   adoptionsLastYear: 280,
   volunteers: 45
 })
 
 const milestones = ref([
   {
-    year: 2010,
-    title: 'Fundação',
-    description: 'O Grupo de voluntários noo Canil/Gatil Municipal do Seixal foi fundado por um pequeno grupo de cidadãos preocupados com o bem-estar animal na região.',
+    year: 1998,
+    title: 'Fundação da Associação',
+    description: 'A nossa jornada começou com um gesto simples, mas transformador: a esterilização de gatos de rua, numa altura em que ainda pouco se falava de programas CED (então chamados CER). Iniciámos este trabalho com as colónias do concelho do Seixal, enfrentando o desconhecimento geral da população sobre este tema. Foi um trabalho pioneiro no concelho, guiado apenas pela vontade de ajudar.',
     imageUrl: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg'
   },
   {
-    year: 2012,
-    title: 'Novas Instalações',
-    description: 'Graças ao apoio da Câmara Municipal do Seixal e de doações privadas, conseguimos mudar para instalações maiores e mais adequadas.',
-    imageUrl: 'https://images.pexels.com/photos/18268400/pexels-photo-18268400.jpeg'
-  },
-  {
-    year: 2015,
-    title: 'Programa de Apadrinhamento',
-    description: 'Lançamos o programa de apadrinhamento, permitindo que pessoas que não podem adotar possam ainda assim contribuir para o bem-estar de um animal específico.',
+    year: 2003,
+    title: 'Iniciamos um projeto de voluntariado no Canil Municipal (atualmente CROACS)',
+    description: 'Foi nesta altura que foi criado o gatil, com condições muito básicas, mas que representava um enorme passo em frente até então, nenhum centro de recolha no distrito de Setúbal dispunha de um espaço dedicado exclusivamente aos gatos. Sem redes sociais ou meios de comunicação digitais, espalhámos a palavra como podíamos. Aos poucos, conseguimos reunir um grupo de voluntários vindos de várias zonas do distrito. O CROACS tornou-se o primeiro centro de recolha do país a contar com o apoio de um grupo de voluntários.',
     imageUrl: 'https://images.pexels.com/photos/1444321/pexels-photo-1444321.jpeg'
   },
   {
-    year: 2018,
-    title: 'Programa Educativo',
-    description: 'Iniciamos um programa educativo, visitando escolas locais para sensibilizar os mais jovens sobre o abandono animal e a importância da adoção responsável.',
-    imageUrl: 'https://images.pexels.com/photos/7516363/pexels-photo-7516363.jpeg'
+    year: 2009,
+    title: 'Encontro Nacional de Associações e Organizações',
+    description: 'Organizámos um encontro de âmbito nacional que reuniu associações e organizações de todo o país. O foco foi a partilha de experiências e a discussão sobre as mudanças que começavam a surgir nos centros de recolha e na sociedade. Um momento marcante de união e construção conjunta de um futuro mais digno para os animais.',
+    imageUrl: 'https://images.pexels.com/photos/18268400/pexels-photo-18268400.jpeg'
   },
   {
-    year: 2020,
-    title: 'Aniversário de 10 Anos',
-    description: 'Celebramos uma década de trabalho com um grande evento virtual durante a pandemia, conseguindo angariar fundos significativos para o abrigo.',
-    imageUrl: 'https://images.pexels.com/photos/6646865/pexels-photo-6646865.jpeg'
-  },
-  {
-    year: 2023,
-    title: 'Expansão das Instalações',
-    description: 'Inauguramos uma nova área dedicada exclusivamente aos gatos e um espaço para reabilitação de animais com necessidades especiais.',
+    year: 2014,
+    title: 'Cedência das Instalações Atuais',
+    description: 'Foi-nos cedido o espaço onde atualmente desenvolvemos grande parte do nosso trabalho. Apesar das limitações estruturais, este local tornou-se um verdadeiro refúgio para os nossos animais. Pode não haver luxo, mas há amor, dedicação e respeito valores que sempre nortearam a nossa missão. Aqui, o princípio permanece inalterado: acima de tudo, estão os animais.',
     imageUrl: 'https://images.pexels.com/photos/17036739/pexels-photo-17036739.jpeg'
+  },
+  {
+    year: 2025,
+    title: 'Remodelação de algumas instalações',
+    description: 'TODO Remove ? Hoje, olhamos para trás com orgulho e para a frente com esperança. Continuamos a crescer, a aprender e a lutar por um mundo mais justo para todos os animais. A nossa história é feita de conquistas, desafios e muito amor e ainda agora começou.',
+    imageUrl: 'https://images.pexels.com/photos/7516363/pexels-photo-7516363.jpeg'
   }
 ])
 
@@ -57,7 +51,7 @@ const milestones = ref([
       <div class="max-w-4xl mx-auto text-center mb-16">
         <h1 class="text-3xl md:text-4xl font-bold text-secondary-800 mb-4">Nossa História</h1>
         <p class="text-lg text-secondary-600">
-          Conheça a trajetória do Grupo de voluntários noo Canil/Gatil Municipal do Seixal 
+          Conheça a trajetória do Grupo de voluntários no Canil-Gatil Municipal do Seixal 
           e o impacto que temos feito na comunidade e na vida dos animais.
         </p>
       </div>
@@ -99,18 +93,21 @@ const milestones = ref([
                 class="rounded-lg shadow-md w-full h-auto object-cover aspect-square" />
             </div>
             <div class="md:w-2/3">
-              <h2 class="text-2xl font-bold text-secondary-800 mb-4">Nossa Missão</h2>
+              <h2 class="text-2xl font-bold text-secondary-800 mb-4">Quem nós somos?</h2>
               <p class="text-secondary-700 mb-4">
-                O Grupo de voluntários noo Canil/Gatil Municipal do Seixal tem como missão resgatar, reabilitar e encontrar lares permanentes 
-                para cães e gatos abandonados ou maltratados na região do Seixal.
+                Somos uma associação sem fins lucrativos, movida por um profundo amor e respeito 
+                por todos os animais, dos mais pequenos aos maiores, dos mais calmos aos mais irrequietos, 
+                dos saudáveis aos que mais necessitam de cuidados. A nossa missão é clara: estender a mão
+                e o coração àqueles que verdadeiramente precisam, oferecendolhes proteção, carinho e 
+                uma nova esperança.
               </p>
+              <h2 class="text-2xl font-bold text-secondary-800 mb-4">As nossas principais atividades</h2>
               <p class="text-secondary-700 mb-4">
-                Acreditamos que todos os animais merecem uma segunda chance e trabalhamos incansavelmente para garantir seu bem-estar, 
-                fornecendo abrigo, alimentação, cuidados veterinários e, acima de tudo, amor.
-              </p>
-              <p class="text-secondary-700">
-                Além disso, buscamos educar a comunidade sobre a importância da adoção responsável e dos cuidados adequados com os animais de estimação, 
-                promovendo uma convivência harmoniosa entre humanos e animais.
+                A nossa ação desenvolve-se em várias frentes, sempre com o bem-estar animal como prioridade. 
+                Prestamos apoio aos animais alojados no CROACS, apoio no tratamento do gatil e no passeio dos 
+                cães. Paralelamente, trabalhamos com animais de rua, prestando-lhes cuidados veterinários
+                básicos, promovendo a esterilização através do programa CED (Captura, Esterilização e Devolução) 
+                e garantindo-lhes alimentação regular.
               </p>
             </div>
           </div>
