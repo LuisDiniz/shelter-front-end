@@ -50,7 +50,7 @@ const adoptOrSponsor = () => {
       </div>
       <p class="text-secondary-600 mb-4 text-sm line-clamp-2">{{ animal.description }}</p>
       <button @click="adoptOrSponsor" class="btn btn-primary w-full">
-        Apadrinhar ou adotar
+        Adoptar ou Apadrinhar
       </button>
     </div>
   </div>

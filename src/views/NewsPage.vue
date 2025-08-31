@@ -36,7 +36,7 @@ const viewNewsDetails = (id: string) => {
       <div class="max-w-4xl mx-auto text-center mb-10">
         <h1 class="text-3xl md:text-4xl font-bold text-secondary-800 mb-4">Notícias</h1>
         <p class="text-lg text-secondary-600">
-          Fique por dentro das novidades e eventos do Canil/Gatil Municipal do Seixal
+          Fique a par das novidades, eventos e iniciativas da nossa associação.
         </p>
       </div>
 

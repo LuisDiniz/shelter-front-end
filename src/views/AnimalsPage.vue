@@ -56,9 +56,9 @@ const filteredAnimals = computed(() => {
     <div class="container mx-auto px-4">
       <!-- Page Header -->
       <div class="mb-10 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold text-secondary-800 mb-4">Nossos Animais</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-secondary-800 mb-4">Os Nossos Animais</h1>
         <p class="text-lg text-secondary-600 max-w-3xl mx-auto">
-          Conheça os animais que estão à espera de um lar amoroso. Pode adotar ou apadrinhar um deles.
+          Descubra os animais que esperam com esperança por uma família. Adopte ou apadrinhe e transforme a vida de um deles.
         </p>
       </div>
 
@@ -74,7 +74,7 @@ const filteredAnimals = computed(() => {
                 v-model="searchQuery"
                 type="text"
                 class="w-full pl-4 pr-10 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                placeholder="Buscar por nome..."
+                placeholder="Procurar por nome..."
               />
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <span class="text-gray-400">

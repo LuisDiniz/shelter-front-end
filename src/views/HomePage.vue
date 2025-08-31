@@ -53,14 +53,15 @@ const goToPage = (route: string) => {
           Ajude-nos a transformar <span class="text-primary-400">vidas</span>
         </h1>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-slide-up">
-          Os voluntários do Canil/Gatil Municipal do Seixal acolhem animais abandonados e trabalham para encontrar lares para eles.
+          No Canil/Gatil Municipal do Seixal, os voluntários acolhem animais abandonados, resgatados de situações difíceis ou provenientes da rua. 
+          Alimentamos e controlamos colónias, damos cuidados essenciais e procuramos, com amor e empenho, inserir cada animal numa família que o acolha para sempre.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up">
           <router-link to="/animais" class="btn btn-primary text-lg px-8 py-3">
-            Conheça nossos animais
+            Conheça os nossos animais
           </router-link>
           <router-link to="/como-ajudar" class="btn bg-white text-secondary-800 hover:bg-gray-100">
-            Como ajudar
+            Saiba como ajudar
           </router-link>
         </div>
       </div>
@@ -101,9 +102,9 @@ const goToPage = (route: string) => {
     <section class="py-16 bg-gray-50">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-secondary-800 mb-2">Nossos Animais</h2>
+          <h2 class="text-3xl font-bold text-secondary-800 mb-2">Os Nossos Animais</h2>
           <p class="text-lg text-secondary-600">
-            Conheça alguns dos nossos amigos de quatro patas à espera de um lar
+            Conheça alguns dos nossos amigos de quatro patas que aguardam, com esperança no olhar, por uma família que os ame, respeite e cuide como merecem.
           </p>
         </div>
 
@@ -125,7 +126,7 @@ const goToPage = (route: string) => {
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-secondary-800 mb-2">Como Ajudar</h2>
           <p class="text-lg text-secondary-600">
-            Existem várias maneiras de contribuir para o bem-estar dos nossos animais
+            Existem muitas formas de apoiar o nosso trabalho e fazer a diferença na vida dos animais que cuidamos e protegemos diariamente:
           </p>
         </div>
 
@@ -136,9 +137,9 @@ const goToPage = (route: string) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-secondary-800 mb-2">Doações</h3>
+            <h3 class="text-xl font-semibold text-secondary-800 mb-2">Donativos</h3>
             <p class="text-secondary-600">
-              Sua contribuição financeira ajuda na compra de medicamentos, ração e manutenção das instalações.
+              A sua contribuição financeira permite-nos adquirir medicamentos, ração, manter as instalações e, acima de tudo, continuar o nosso trabalho diário no terreno — resgatar animais, alimentar colónias e prestar apoio a situações urgentes.
             </p>
           </div>
 
@@ -150,7 +151,7 @@ const goToPage = (route: string) => {
             </div>
             <h3 class="text-xl font-semibold text-secondary-800 mb-2">Voluntariado</h3>
             <p class="text-secondary-600">
-              Dedique seu tempo e carinho aos animais, ajudando a cuidar, limpar e socializar com eles.
+              Ofereça o seu tempo e dedicação. Pode ajudar nas tarefas de limpeza, alimentação, cuidados diários, socialização dos animais e também em ações de sensibilização e apoio em eventos.
             </p>
           </div>
 
@@ -162,14 +163,14 @@ const goToPage = (route: string) => {
             </div>
             <h3 class="text-xl font-semibold text-secondary-800 mb-2">Apadrinhamento</h3>
             <p class="text-secondary-600">
-              Apadrinhe um animal e contribua mensalmente com seu bem-estar enquanto ele espera por um lar definitivo.
+              Apadrinhe um animal e contribua mensalmente para o seu bem-estar enquanto ele aguarda por uma família definitiva. Receberá actualizações e poderá visitar o seu afilhado.
             </p>
           </div>
         </div>
 
         <div class="text-center mt-10">
           <button @click="goToPage('/como-ajudar')" class="btn btn-secondary">
-            Saiba mais
+            Saiba outras formas de ajudar
           </button>
         </div>
       </div>
@@ -206,7 +207,7 @@ const goToPage = (route: string) => {
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-secondary-800 mb-2">Últimas Notícias</h2>
           <p class="text-lg text-secondary-600">
-            Fique por dentro das novidades e eventos do nosso canil
+            Fique a par das novidades, eventos e iniciativas da nossa associação.
           </p>
         </div>
 

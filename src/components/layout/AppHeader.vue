@@ -47,7 +47,7 @@ const handleLogin = () => {
             Início
           </router-link>
           <router-link to="/animais" class="text-secondary-800 hover:text-primary-500 font-medium transition-colors">
-            Nossos Animais
+            Os Nossos Animais
           </router-link>
           <router-link to="/como-ajudar" class="text-secondary-800 hover:text-primary-500 font-medium transition-colors">
             Como Ajudar
@@ -99,7 +99,7 @@ const handleLogin = () => {
             @click="() => navigateTo('/animais')"
             class="text-secondary-800 hover:text-primary-500 font-medium py-2 text-left"
           >
-            Nossos Animais
+            Os Nossos Animais
           </button>
           <button 
             @click="() => navigateTo('/como-ajudar')"
