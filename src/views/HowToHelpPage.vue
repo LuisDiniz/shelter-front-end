@@ -7,7 +7,7 @@ const donationOptions = ref([
     description: 'A sua ajuda financeira é vital para mantermos nossas operações. Todas as doações são utilizadas para alimentação, cuidados veterinários e manutenção das nossas instalações.',
     steps: [
       'Transferência bancária para a conta: PT50003600229910007534465',
-      'MBWAY para o número: 966420094'
+      'MBWAY (exclusivamente): 966420094'
     ],
     icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
   },
@@ -18,9 +18,9 @@ const donationOptions = ref([
       'Ração húmida(patê) ou seca para gatos e cães',
       'Leite para gatinhos',
       'Areia de gato', 
-      'Produtos de limpeza',
+      'Produtos de limpeza, resguardos e toalhitas',
       'Cobertores, toalhas, camas e transportadoras',
-      'Medicamentos (consulte nossa lista de necessidades)',
+      'Medicamentos, desparasitantes internos e externos',
       'Brinquedos para animais'
     ],
     icon: 'M20 7l-8-4-8 4m16 0v10a2 2 0 11-4 0v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5a2 2 0 00-2 2v3.104a7 7 0 001.325 4.108'
@@ -38,10 +38,10 @@ const donationOptions = ref([
   },
   {
     title: 'Sócio',
-    description: 'Tornar-se sócio e contribua com um valor anual ou mensal',
+    description: 'Tornar-se sócio e contribua com um valor semestral ou anual',
     steps: [
       'Contribui para pagamentos de despesas fixas',
-      'Flexibilidade de pagemento mensal ou anual',
+      'Flexibilidade de pagemento semestral (12€ a cada 6 meses) ou anual (24€)',
       'Receba atualizações da associação',
       'Desconto em serviços oferecidos por parceiros da associação',
     ],
@@ -58,7 +58,7 @@ const volunteerOptions = ref([
       'Alimentação dos animais',
       'Limpeza das instalações',
       'Socialização com os animais',
-      'Ajuda em campanhas de recolha de alimentos',
+      'Ajuda em campanhas de recolha de alimentos e outros eventos',
     ],
     icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
   },
@@ -100,11 +100,11 @@ const otherWaysToHelp = ref([
     description: 'Participe ou ajude a organizar eventos para recolher alimentos ou arrecadar fundos.',
     icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
   },
-  {
-    title: 'Habilidades Profissionais',
-    description: 'Ofereça seus conhecimentos profissionais (veterinários, fotógrafos, pedreiros, designers, programadores, etc).',
-    icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-  },
+  // {
+  //   title: 'Habilidades Profissionais',
+  //   description: 'Ofereça seus conhecimentos profissionais (veterinários, fotógrafos, pedreiros, designers, programadores, etc).',
+  //   icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+  // },
   {
     title: 'Empresas Parceiras',
     description: 'Se representa uma empresa ou negócio, pode apoiar-nos através de parcerias solidárias, patrocínios ou campanhas.',
@@ -187,36 +187,6 @@ const otherWaysToHelp = ref([
         </div>
       </section>
 
-      <!-- Sponsorship Section -->
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold text-secondary-800 mb-8 text-center">Apadrinhamento</h2>
-        
-        <div class="max-w-2xl mx-auto">
-          <div 
-            v-for="(option, index) in sponsorshipOptions" 
-            :key="`sponsorship-${index}`"
-            class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-          >
-            <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="option.icon" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold text-secondary-800 mb-2">{{ option.title }}</h3>
-            <p class="text-secondary-600 mb-4">{{ option.description }}</p>
-            <ul class="space-y-2 text-secondary-700">
-              <li v-for="(step, stepIndex) in option.steps" :key="`sponsorship-step-${index}-${stepIndex}`" class="flex items-start">
-                <span class="text-primary-500 mr-2">•</span>
-                <span>{{ step }}</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="mt-8 text-center">
-            <router-link to="/animais" class="btn btn-primary">Conhecer animais para apadrinhar</router-link>
-          </div>
-        </div>
-      </section>
 
       <!-- Other Ways to Help -->
       <section>
@@ -239,22 +209,6 @@ const otherWaysToHelp = ref([
         </div>
       </section>
 
-      <!-- Call to Action -->
-      <div class="mt-16 bg-primary-500 rounded-lg p-8 text-white text-center">
-        <h2 class="text-2xl font-bold mb-4">Toda ajuda faz a diferença!</h2>
-        <p class="text-lg mb-6">
-          Cada pequena contribuição tem um grande impacto na vida dos nossos animais. 
-          Entre em contato conosco para saber mais sobre como você pode ajudar.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="mailto:contato@canilseixal.pt" class="btn bg-white text-primary-600 hover:bg-gray-100">
-            Enviar e-mail
-          </a>
-          <a href="tel:+351912345678" class="btn bg-secondary-800 text-white hover:bg-secondary-900">
-            Ligar agora
-          </a>
-        </div>
-      </div>
     </div>
   </div>
 </template>

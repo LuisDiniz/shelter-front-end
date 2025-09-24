@@ -2,18 +2,18 @@
 import { ref, onMounted } from 'vue'
 
 const shelterInfo = ref({
-  foundingYear: 1998,
+  foundingYear: 1997,
   totalAnimalsHelped: 3500,
   currentAnimals: 80,
-  adoptionsLastYear: 280,
-  volunteers: 45
+  adoptionsLastYear: 150,
+  volunteers: 20
 })
 
 const milestones = ref([
   {
-    year: 1998,
+    year: 1997,
     title: 'Fundação da Associação',
-    description: 'A nossa jornada começou com um gesto simples, mas transformador: a esterilização de gatos de rua, numa altura em que ainda pouco se falava de programas CED (então chamados CER). Iniciámos este trabalho com as colónias do concelho do Seixal, enfrentando o desconhecimento geral da população sobre este tema. Foi um trabalho pioneiro no concelho, guiado apenas pela vontade de ajudar.',
+    description: 'A nossa jornada co+meçou com um gesto simples, mas transformador: a esterilização de gatos de rua, numa altura em que ainda pouco se falava de programas CED (então chamados CER). Iniciámos este trabalho com as colónias do concelho do Seixal, enfrentando o desconhecimento geral da população sobre este tema. Foi um trabalho pioneiro no concelho, guiado apenas pela vontade de ajudar.',
     imageUrl: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg'
   },
   {
@@ -98,14 +98,14 @@ const milestones = ref([
                 Somos uma associação sem fins lucrativos, movida por um profundo amor e respeito 
                 por todos os animais, dos mais pequenos aos maiores, dos mais calmos aos mais irrequietos, 
                 dos saudáveis aos que mais necessitam de cuidados. A nossa missão é clara: estender a mão
-                e o coração àqueles que verdadeiramente precisam, oferecendolhes proteção, carinho e 
+                e o coração àqueles que verdadeiramente precisam, oferecendo-lhes proteção, carinho e 
                 uma nova esperança.
               </p>
               <h2 class="text-2xl font-bold text-secondary-800 mb-4">As nossas principais atividades</h2>
               <p class="text-secondary-700 mb-4">
                 A nossa ação desenvolve-se em várias frentes, sempre com o bem-estar animal como prioridade. 
-                Prestamos apoio aos animais alojados no CROACS, apoio no tratamento do gatil e no passeio dos 
-                cães. Paralelamente, trabalhamos com animais de rua, prestando-lhes cuidados veterinários
+                Prestamos apoio aos animais alojados no CROACS, apoio no tratamento do gatil, no passeio dos 
+                cães. Paralelamente, apoiamos tutores carenciados, trabalhamos com animais de rua, prestando-lhes cuidados veterinários
                 básicos, promovendo a esterilização através do programa CED (Captura, Esterilização e Devolução) 
                 e garantindo-lhes alimentação regular.
               </p>

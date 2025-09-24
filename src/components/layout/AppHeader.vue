@@ -35,8 +35,8 @@ const handleLogin = () => {
           <router-link to="/" class="flex items-center">
             <img src="/src/assets/logo.png" alt="Logo" class="h-12 w-auto mr-2" />
             <div class="text-secondary-800 font-semibold max-w-[200px] sm:max-w-none">
-              <span class="text-xs sm:text-sm block leading-tight">Grupo de voluntários no</span>
-              <span class="text-sm sm:text-base block leading-tight">Canil-Gatil Municipal do Seixal</span>
+              <span class="text-xs sm:text-base block leading-tight">Grupo de voluntários no</span>
+              <span class="text-sm sm:text-sm block leading-tight">Canil-Gatil Municipal do Seixal</span>
             </div>
           </router-link>
         </div>

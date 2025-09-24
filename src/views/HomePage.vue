@@ -53,8 +53,7 @@ const goToPage = (route: string) => {
           Ajude-nos a transformar <span class="text-primary-400">vidas</span>
         </h1>
         <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-slide-up">
-          No Canil/Gatil Municipal do Seixal, os voluntários acolhem animais abandonados, resgatados de situações difíceis ou provenientes da rua. 
-          Alimentamos e controlamos colónias, damos cuidados essenciais e procuramos, com amor e empenho, inserir cada animal numa família que o acolha para sempre.
+          Adoramos animais de todas as maneiras e feitios (grandes e pequenos, doentes e saudáveis, sossegados e irrequietos) e queremos ajudar os que realmente precisam.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up">
           <router-link to="/animais" class="btn btn-primary text-lg px-8 py-3">
@@ -139,7 +138,7 @@ const goToPage = (route: string) => {
             </div>
             <h3 class="text-xl font-semibold text-secondary-800 mb-2">Donativos</h3>
             <p class="text-secondary-600">
-              A sua contribuição financeira permite-nos adquirir medicamentos, ração, manter as instalações e, acima de tudo, continuar o nosso trabalho diário no terreno — resgatar animais, alimentar colónias e prestar apoio a situações urgentes.
+              A sua contribuição financeira permite-nos prestar apoio médico-veterinário aos animais nomeadamente internamentos, cirurgias, consultas, vacinas e medicamentos.
             </p>
           </div>
 
