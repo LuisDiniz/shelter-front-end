@@ -17,37 +17,37 @@ interface Animal {
 const mockAnimals: Animal[] = [
   {
     id: '1',
-    name: 'Max',
-    type: 'dog',
+    name: 'Léo',
+    type: 'cat',
     gender: 'male',
-    age: 3,
+    age: 5,
     description: 'Max é um cão muito carinhoso e brincalhão. Ele adora correr e brincar com bolas. É muito sociável com pessoas e outros cães.',
-    breed: 'Labrador',
-    imageUrl: 'https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg'
+    breed: 'Europeu',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765832946/Leo_ywbenz.jpg'
   },
   {
     id: '2',
-    name: 'Luna',
+    name: 'Malvadinha',
     type: 'cat',
     gender: 'female',
-    age: 2,
+    age: 8,
     description: 'Luna é uma gata muito calma e afetuosa. Ela adora deitar no colo e receber carinho. Está à procura de um lar tranquilo.',
-    breed: 'Siamês',
-    imageUrl: 'https://images.pexels.com/photos/1521304/pexels-photo-1521304.jpeg'
+    breed: 'Europeu',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765832945/Malvadinha_wi7n6z.jpg'
   },
   {
     id: '3',
-    name: 'Rex',
-    type: 'dog',
-    gender: 'male',
+    name: 'Dentuças',
+    type: 'cat',
+    gender: 'female',
     age: 5,
     description: 'Rex é um cão de guarda muito leal e protetor. Ele precisa de um dono experiente que o ajude a canalizar a sua energia.',
     breed: 'Pastor Alemão',
-    imageUrl: 'https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg'
   },
   {
     id: '4',
-    name: 'Mia',
+    name: 'Ronnie',
     type: 'cat',
     gender: 'female',
     age: 1,
@@ -57,17 +57,27 @@ const mockAnimals: Animal[] = [
   },
   {
     id: '5',
-    name: 'Thor',
-    type: 'dog',
+    name: 'Palhacinho',
+    type: 'cat',
     gender: 'male',
-    age: 4,
+    age: 8,
     description: 'Thor é um cão muito forte e energético. Ele adora fazer caminhadas e correr. Precisa de espaço para se exercitar.',
     breed: 'Husky',
-    imageUrl: 'https://images.pexels.com/photos/2853422/pexels-photo-2853422.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Palhacinho_fhrbhq.jpg'
   },
   {
     id: '6',
-    name: 'Nina',
+    name: 'Manny',
+    type: 'cat',
+    gender: 'male',
+    age: 3,
+    description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
+    breed: 'Ragdoll',
+    imageUrl: 'https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg'
+  },
+  {
+    id: '7',
+    name: 'Malhadinha',
     type: 'cat',
     gender: 'female',
     age: 3,

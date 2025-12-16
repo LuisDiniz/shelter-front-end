@@ -40,7 +40,7 @@ const goToPage = (route: string) => {
       <!-- Hero Background Image -->
       <div class="absolute inset-0 z-0">
         <img 
-          src="https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+          src="https://res.cloudinary.com/dlqmc28to/image/upload/v1765752113/Micas_New_zs3sbh_gr0fna.jpg"
           alt="Happy dog" 
           class="w-full h-full object-cover"
         >

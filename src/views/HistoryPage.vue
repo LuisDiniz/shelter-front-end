@@ -37,7 +37,7 @@ const milestones = ref([
   {
     year: 2025,
     title: 'Remodelação de algumas instalações',
-    description: 'TODO Remove ? Hoje, olhamos para trás com orgulho e para a frente com esperança. Continuamos a crescer, a aprender e a lutar por um mundo mais justo para todos os animais. A nossa história é feita de conquistas, desafios e muito amor e ainda agora começou.',
+    description: 'Foram realizadas obras de remodelações na lavandaeria e na enfermaria',
     imageUrl: 'https://images.pexels.com/photos/7516363/pexels-photo-7516363.jpeg'
   }
 ])

@@ -7,7 +7,7 @@ const donationOptions = ref([
     description: 'A sua ajuda financeira é vital para mantermos nossas operações. Todas as doações são utilizadas para alimentação, cuidados veterinários e manutenção das nossas instalações.',
     steps: [
       'Transferência bancária para a conta: PT50003600229910007534465',
-      'MBWAY (exclusivamente): 966420094'
+      'MBWAY (exclusivamente): 966420094 ou 966420094',
     ],
     icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
   },
@@ -63,13 +63,14 @@ const volunteerOptions = ref([
     icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
   },
   {
-    title: 'Famílias de Acolhimento Temporário',
-    description: 'Acolha um animal temporariamente em sua casa:',
+    title: 'Habilidades profissionais',
+    description: 'Oferaça a sua experiência e competências profissionais',
     steps: [
-      'Ajude animais que precisam de cuidados especiais',
-      'Ofereça um ambiente familiar para filhotes',
-      'Prepare animais para adoção através da socialização',
-      'Reduza o estresse dos animais no abrigo',
+      'Fotografia e vídeo para melhorar anúncios de adoção.',
+      'Trabalhos de pedreiro, pintura, carpintaria e pequenas reparações para apoiar remodelações e melhorias das instalações do abrigo.',
+      'Design gráfico e programação para ajudar com o nosso site',
+      'Tradução e revisão de textos para ampliar o alcance da comunicação.',
+      'Gestão de redes sociais para promover campanhas.'
     ],
     icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'
   },
@@ -192,7 +193,7 @@ const otherWaysToHelp = ref([
       <section>
         <h2 class="text-2xl font-bold text-secondary-800 mb-8 text-center">Outras formas de ajudar</h2>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div 
             v-for="(option, index) in otherWaysToHelp" 
             :key="`other-${index}`"
