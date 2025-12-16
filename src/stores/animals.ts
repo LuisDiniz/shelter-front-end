@@ -44,19 +44,9 @@ const mockAnimals: Animal[] = [
     description: 'Rex é um cão de guarda muito leal e protetor. Ele precisa de um dono experiente que o ajude a canalizar a sua energia.',
     breed: 'Pastor Alemão',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg'
-  },
+  },  
   {
     id: '4',
-    name: 'Ronnie',
-    type: 'cat',
-    gender: 'female',
-    age: 1,
-    description: 'Mia é uma gatinha muito brincalhona e curiosa. Ela adora explorar e brincar com brinquedos. É muito sociável.',
-    breed: 'Persa',
-    imageUrl: 'https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg'
-  },
-  {
-    id: '5',
     name: 'Palhacinho',
     type: 'cat',
     gender: 'male',
@@ -66,24 +56,24 @@ const mockAnimals: Animal[] = [
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Palhacinho_fhrbhq.jpg'
   },
   {
-    id: '6',
+    id: '5',
     name: 'Manny',
     type: 'cat',
     gender: 'male',
     age: 3,
     description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Ragdoll',
-    imageUrl: 'https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765876377/Manny_ccbyjz.jpg'
   },
   {
-    id: '7',
+    id: '6',
     name: 'Malhadinha',
     type: 'cat',
     gender: 'female',
     age: 3,
     description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Ragdoll',
-    imageUrl: 'https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765876375/Malhadinha_trulge.jpg'
   }
 ]
 
