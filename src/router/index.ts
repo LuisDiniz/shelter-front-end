@@ -8,6 +8,7 @@ import LoginPage from '../views/LoginPage.vue'
 import AdminPage from '../views/AdminPage.vue'
 import AdoptionFormPage from '../views/AdoptionFormPage.vue'
 import NewsDetailPage from '../views/NewsDetailPage.vue'
+import AnimalDetailPage from '../views/AnimalDetailPage.vue'
 import NotFoundPage from '../views/NotFoundPage.vue'
 
 const routes: RouteRecordRaw[] = [
@@ -40,6 +41,12 @@ const routes: RouteRecordRaw[] = [
     path: '/noticias/:id',
     name: 'NewsDetail',
     component: NewsDetailPage
+  },
+  {
+    path: '/animais/:id',
+    name: 'AnimalDetail',
+    component: AnimalDetailPage,
+    props: true
   },
   {
     path: '/login',
