@@ -23,7 +23,7 @@ const mockAnimals: Animal[] = [
     age: 5,
     description: 'Max é um cão muito carinhoso e brincalhão. Ele adora correr e brincar com bolas. É muito sociável com pessoas e outros cães.',
     breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765832946/Leo_ywbenz.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771245878/copy_of_leo_ywbenz_48aa34.jpg'
   },
   {
     id: '2',
@@ -33,7 +33,7 @@ const mockAnimals: Animal[] = [
     age: 8,
     description: 'Luna é uma gata muito calma e afetuosa. Ela adora deitar no colo e receber carinho. Está à procura de um lar tranquilo.',
     breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765832945/Malvadinha_wi7n6z.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/w_380,h_240,c_fit/v1765832945/Malvadinha_wi7n6z.jpg'
   },
   {
     id: '3',
@@ -53,7 +53,7 @@ const mockAnimals: Animal[] = [
     age: 8,
     description: 'Thor é um cão muito forte e energético. Ele adora fazer caminhadas e correr. Precisa de espaço para se exercitar.',
     breed: 'Husky',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Palhacinho_fhrbhq.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/IMG_1655_kqeqel'
   },
   {
     id: '5',
@@ -63,7 +63,7 @@ const mockAnimals: Animal[] = [
     age: 3,
     description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Ragdoll',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765876377/Manny_ccbyjz.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771244812/IMG_1657_gsuvtg.jpg'
   },
   {
     id: '6',
@@ -73,7 +73,7 @@ const mockAnimals: Animal[] = [
     age: 3,
     description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Ragdoll',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765876375/Malhadinha_trulge.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242687/Malhadinha_trulge.jpg'
   }
 ]
 
