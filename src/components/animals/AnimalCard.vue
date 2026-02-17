@@ -22,11 +22,6 @@ const animalType = computed(() => {
 const viewDetails = () => {
   router.push(`/animais/${props.animal.id}`)
 }
-
-const adoptOrSponsor = (event: Event) => {
-  event.stopPropagation()
-  router.push(`/adotar/${props.animal.id}`)
-}
 </script>
 
 <template>
@@ -54,8 +49,8 @@ const adoptOrSponsor = (event: Event) => {
         </div>
       </div>
       <p class="text-secondary-600 mb-4 text-sm line-clamp-2">{{ animal.description }}</p>
-      <button @click="adoptOrSponsor" class="btn btn-primary w-full">
-        Adoptar ou Apadrinhar
+      <button class="btn btn-primary w-full">
+        Mais detalhes
       </button>
     </div>
   </div>
