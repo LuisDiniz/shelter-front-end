@@ -23,7 +23,7 @@ const mockAnimals: Animal[] = [
     age: 5,
     description: 'Max é um cão muito carinhoso e brincalhão. Ele adora correr e brincar com bolas. É muito sociável com pessoas e outros cães.',
     breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771245878/copy_of_leo_ywbenz_48aa34.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/Leo_ywbenz.jpg'
   },
   {
     id: '2',
@@ -33,7 +33,7 @@ const mockAnimals: Animal[] = [
     age: 8,
     description: 'Luna é uma gata muito calma e afetuosa. Ela adora deitar no colo e receber carinho. Está à procura de um lar tranquilo.',
     breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/w_380,h_240,c_fit/v1765832945/Malvadinha_wi7n6z.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg'
   },
   {
     id: '3',
