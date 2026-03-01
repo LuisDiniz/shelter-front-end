@@ -50,7 +50,7 @@ const viewDetails = () => {
       </div>
       <p class="text-secondary-600 mb-4 text-sm line-clamp-2">{{ animal.description }}</p>
       <button class="btn btn-primary w-full">
-        Mais detalhes
+        Saiba mais
       </button>
     </div>
   </div>
