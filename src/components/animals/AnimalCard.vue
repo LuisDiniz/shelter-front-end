@@ -19,17 +19,17 @@ const animalType = computed(() => {
   return props.animal.type === 'dog' ? 'Cão' : 'Gato'
 })
 
-const adoptOrSponsor = () => {
-  router.push(`/adotar/${props.animal.id}`)
+const viewDetails = () => {
+  router.push(`/animais/${props.animal.id}`)
 }
 </script>
 
 <template>
-  <div class="card group">
+  <div class="card group cursor-pointer transition-shadow hover:shadow-lg" @click="viewDetails">
     <div class="relative overflow-hidden h-60">
-      <img 
-        :src="animal.imageUrl" 
-        :alt="animal.name" 
+      <img
+        :src="animal.imageUrl"
+        :alt="animal.name"
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
       <div class="absolute top-0 left-0 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-br-lg">
@@ -49,8 +49,8 @@ const adoptOrSponsor = () => {
         </div>
       </div>
       <p class="text-secondary-600 mb-4 text-sm line-clamp-2">{{ animal.description }}</p>
-      <button @click="adoptOrSponsor" class="btn btn-primary w-full">
-        Adoptar ou Apadrinhar
+      <button class="btn btn-primary w-full">
+        Saiba mais
       </button>
     </div>
   </div>

@@ -11,6 +11,7 @@ interface Animal {
   description: string
   breed: string
   imageUrl: string
+  images?: string[]
 }
 
 // Mock data for animals
@@ -23,7 +24,8 @@ const mockAnimals: Animal[] = [
     age: 5,
     description: 'Max é um cão muito carinhoso e brincalhão. Ele adora correr e brincar com bolas. É muito sociável com pessoas e outros cães.',
     breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/Leo_ywbenz.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/Leo_ywbenz.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/Leo_ywbenz.jpg']
   },
   {
     id: '2',
@@ -33,7 +35,8 @@ const mockAnimals: Animal[] = [
     age: 8,
     description: 'Luna é uma gata muito calma e afetuosa. Ela adora deitar no colo e receber carinho. Está à procura de um lar tranquilo.',
     breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg']
   },
   {
     id: '3',
@@ -43,8 +46,9 @@ const mockAnimals: Animal[] = [
     age: 5,
     description: 'Rex é um cão de guarda muito leal e protetor. Ele precisa de um dono experiente que o ajude a canalizar a sua energia.',
     breed: 'Pastor Alemão',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg'
-  },  
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg']
+  },
   {
     id: '4',
     name: 'Palhacinho',
@@ -53,7 +57,8 @@ const mockAnimals: Animal[] = [
     age: 8,
     description: 'Thor é um cão muito forte e energético. Ele adora fazer caminhadas e correr. Precisa de espaço para se exercitar.',
     breed: 'Husky',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/IMG_1655_kqeqel'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/IMG_1655_kqeqel',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/IMG_1655_kqeqel','https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Palhacinho_fhrbhq.jpg']
   },
   {
     id: '5',
@@ -63,7 +68,8 @@ const mockAnimals: Animal[] = [
     age: 3,
     description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Ragdoll',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771244812/IMG_1657_gsuvtg.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771244812/IMG_1657_gsuvtg.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1771244812/IMG_1657_gsuvtg.jpg','https://res.cloudinary.com/dlqmc28to/image/upload/v1765876377/Manny_ccbyjz.jpg']
   },
   {
     id: '6',
@@ -73,7 +79,8 @@ const mockAnimals: Animal[] = [
     age: 3,
     description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Ragdoll',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242687/Malhadinha_trulge.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242687/Malhadinha_trulge.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1771242687/Malhadinha_trulge.jpg']
   }
 ]
 

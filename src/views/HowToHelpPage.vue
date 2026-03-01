@@ -76,20 +76,6 @@ const volunteerOptions = ref([
   },
 ])
 
-const sponsorshipOptions = ref([
-  {
-    title: 'Apadrinhamento',
-    description: 'Apadrinhar um animal é uma forma de ajudar enquanto ele aguarda por uma família definitiva',
-    steps: [
-      'Escolha um animal para apadrinhar',
-      'Contribua mensalmente com um valor que será usado para seus cuidados',
-      'Receba atualizações regulares sobre o seu afilhado',
-      'Visite-o sempre que desejar',
-    ],
-    icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-  },
-])
-
 const otherWaysToHelp = ref([
   {
     title: 'Divulgação',
