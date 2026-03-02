@@ -111,7 +111,7 @@ const startAddAnimal = () => {
   isAddingAnimal.value = true
 }
 
-const startEditAnimal = (animal) => {
+const startEditAnimal = (animal: typeof animalsStore.animals[0]) => {
   animalForm.value = { ...animal }
   isEditingAnimal.value = true
   isAddingAnimal.value = false
@@ -119,13 +119,20 @@ const startEditAnimal = (animal) => {
 
 const saveAnimal = async () => {
   if (!isAnimalFormValid.value) return
-  
-  if (isAddingAnimal.value) {
-    await animalsStore.addAnimal({ ...animalForm.value })
-  } else if (isEditingAnimal.value) {
-    await animalsStore.updateAnimal(animalForm.value.id, { ...animalForm.value })
+
+  const animalData = {
+    ...animalForm.value,
+    type: animalForm.value.type as 'dog' | 'cat',
+    gender: animalForm.value.gender as 'male' | 'female'
   }
-  
+
+  if (isAddingAnimal.value) {
+    const { id, ...animalWithoutId } = animalData
+    await animalsStore.addAnimal(animalWithoutId)
+  } else if (isEditingAnimal.value) {
+    await animalsStore.updateAnimal(animalForm.value.id, animalData)
+  }
+
   resetForms()
 }
 
@@ -141,8 +148,8 @@ const startAddNews = () => {
   isAddingNews.value = true
 }
 
-const startEditNews = (news) => {
-  const formattedNews = { 
+const startEditNews = (news: typeof newsStore.news[0]) => {
+  const formattedNews = {
     ...news,
     tags: news.tags.join(', ')
   }

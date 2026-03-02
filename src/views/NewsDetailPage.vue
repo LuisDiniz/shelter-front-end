@@ -7,12 +7,12 @@ const route = useRoute()
 const router = useRouter()
 const newsStore = useNewsStore()
 
-const newsItem = ref(null)
+const newsItem = ref<typeof newsStore.news[0] | null>(null)
 const isLoading = ref(true)
 const formattedDate = ref('')
 
 onMounted(async () => {
-  const newsId = route.params.id
+  const newsId = route.params.id as string
   
   if (!newsId) {
     router.push('/noticias')
@@ -41,6 +41,10 @@ onMounted(async () => {
 const goBack = () => {
   router.push('/noticias')
 }
+
+const viewNewsDetails = (id: string) => {
+  router.push(`/noticias/${id}`)
+}
 </script>
 
 <template>
@@ -52,15 +56,15 @@ const goBack = () => {
       </div>
 
       <!-- News Article -->
-      <div v-else class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      <div v-else-if="newsItem" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <!-- Featured Image -->
         <div class="relative">
-          <img 
-            :src="newsItem.imageUrl" 
-            :alt="newsItem.title" 
+          <img
+            :src="newsItem.imageUrl"
+            :alt="newsItem.title"
             class="w-full h-80 object-cover"
           />
-          <button 
+          <button
             @click="goBack"
             class="absolute top-4 left-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
             aria-label="Voltar"
@@ -90,13 +94,13 @@ const goBack = () => {
           </div>
 
           <h1 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4">{{ newsItem.title }}</h1>
-          
+
           <div class="prose max-w-none text-secondary-700" v-html="newsItem.content"></div>
 
           <!-- Tags -->
           <div class="mt-8 flex flex-wrap gap-2">
-            <span 
-              v-for="tag in newsItem.tags" 
+            <span
+              v-for="tag in newsItem.tags"
               :key="tag"
               class="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm"
             >

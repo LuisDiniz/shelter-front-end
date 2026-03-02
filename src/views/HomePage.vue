@@ -10,8 +10,8 @@ const router = useRouter()
 const animalsStore = useAnimalsStore()
 const newsStore = useNewsStore()
 
-const featuredAnimals = ref([])
-const latestNews = ref([])
+const featuredAnimals = ref<typeof animalsStore.animals>([])
+const latestNews = ref<typeof newsStore.news>([])
 
 onMounted(async () => {
   // Fetch featured animals and latest news
