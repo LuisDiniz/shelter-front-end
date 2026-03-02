@@ -2,14 +2,26 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAnimalsStore } from '../stores/animals'
-import { useForm, Field, ErrorMessage } from 'vee-validate'
+import { useForm, Field } from 'vee-validate'
 import * as yup from 'yup'
+
+interface Animal {
+  id: string
+  name: string
+  type: 'dog' | 'cat'
+  gender: 'male' | 'female'
+  age: number
+  description: string
+  breed: string
+  imageUrl: string
+  images?: string[]
+}
 
 const route = useRoute()
 const router = useRouter()
 const animalsStore = useAnimalsStore()
 
-const animal = ref(null)
+const animal = ref<Animal | null>(null)
 const isLoading = ref(true)
 const isSubmitting = ref(false)
 const submitSuccess = ref(false)
@@ -43,8 +55,8 @@ const { handleSubmit, values, resetForm } = useForm({
 })
 
 onMounted(async () => {
-  const animalId = route.params.id
-  
+  const animalId = route.params.id as string
+
   if (!animalId) {
     router.push('/animais')
     return
@@ -52,13 +64,21 @@ onMounted(async () => {
 
   await animalsStore.fetchAnimal(animalId)
   animal.value = animalsStore.currentAnimal
-  
+
   if (animal.value) {
-    values.animalName = animal.value.name
+    resetForm({
+      values: {
+        fullName: '',
+        animalName: animal.value.name,
+        email: '',
+        phone: '',
+        requestType: ''
+      }
+    })
   } else {
     router.push('/animais')
   }
-  
+
   isLoading.value = false
 })
 
@@ -70,21 +90,29 @@ const requestTypeLabel = computed(() => {
 
 const onSubmit = handleSubmit(async (values) => {
   isSubmitting.value = true
-  
+
   try {
-    // In a real app, this would send data to a backend
-    console.log('Form submitted:', values)
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
+    const response = await fetch('/api/sendEmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    })
+
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.message)
+    }
+
     submitSuccess.value = true
     setTimeout(() => {
       resetForm()
       router.push('/animais')
     }, 3000)
   } catch (error) {
-    console.error('Error submitting form:', error)
+    alert('Erro ao enviar pedido.')
+    console.log('Error submitting form: ', error)
   } finally {
     isSubmitting.value = false
   }
@@ -129,10 +157,10 @@ const onSubmit = handleSubmit(async (values) => {
 
           <div class="p-6">
             <!-- Animal Information -->
-            <div class="mb-8 flex items-center">
-              <img 
-                :src="animal.imageUrl" 
-                :alt="animal.name" 
+            <div v-if="animal" class="mb-8 flex items-center">
+              <img
+                :src="animal.imageUrl"
+                :alt="animal.name"
                 class="w-20 h-20 rounded-full object-cover mr-4 border-2 border-primary-500"
               />
               <div>
