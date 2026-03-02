@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 const shelterInfo = ref({
   foundingYear: 1997,
@@ -13,32 +13,32 @@ const milestones = ref([
   {
     year: 1997,
     title: 'Fundação da Associação',
-    description: 'A nossa jornada co+meçou com um gesto simples, mas transformador: a esterilização de gatos de rua, numa altura em que ainda pouco se falava de programas CED (então chamados CER). Iniciámos este trabalho com as colónias do concelho do Seixal, enfrentando o desconhecimento geral da população sobre este tema. Foi um trabalho pioneiro no concelho, guiado apenas pela vontade de ajudar.',
-    imageUrl: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg'
+    description: 'A nossa jornada começou com um gesto simples, mas transformador: a esterilização de gatos de rua, numa altura em que ainda pouco se falava de programas CED (então chamados CER). Iniciámos este trabalho com as colónias do concelho do Seixal, enfrentando o desconhecimento geral da população sobre este tema. Foi um trabalho pioneiro no concelho, guiado apenas pela vontade de ajudar.',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-09-13-21-21-55_on6lnw.jpg'
   },
   {
     year: 2003,
     title: 'Iniciamos um projeto de voluntariado no Canil Municipal (atualmente CROACS)',
     description: 'Foi nesta altura que foi criado o gatil, com condições muito básicas, mas que representava um enorme passo em frente até então, nenhum centro de recolha no distrito de Setúbal dispunha de um espaço dedicado exclusivamente aos gatos. Sem redes sociais ou meios de comunicação digitais, espalhámos a palavra como podíamos. Aos poucos, conseguimos reunir um grupo de voluntários vindos de várias zonas do distrito. O CROACS tornou-se o primeiro centro de recolha do país a contar com o apoio de um grupo de voluntários.',
-    imageUrl: 'https://images.pexels.com/photos/1444321/pexels-photo-1444321.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-02-15-17-50-10_d9gvv5.jpg'
   },
   {
     year: 2009,
     title: 'Encontro Nacional de Associações e Organizações',
     description: 'Organizámos um encontro de âmbito nacional que reuniu associações e organizações de todo o país. O foco foi a partilha de experiências e a discussão sobre as mudanças que começavam a surgir nos centros de recolha e na sociedade. Um momento marcante de união e construção conjunta de um futuro mais digno para os animais.',
-    imageUrl: 'https://images.pexels.com/photos/18268400/pexels-photo-18268400.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-09-14-15-31-19_2_vv5de3.jpg'
   },
   {
     year: 2014,
     title: 'Cedência das Instalações Atuais',
     description: 'Foi-nos cedido o espaço onde atualmente desenvolvemos grande parte do nosso trabalho. Apesar das limitações estruturais, este local tornou-se um verdadeiro refúgio para os nossos animais. Pode não haver luxo, mas há amor, dedicação e respeito valores que sempre nortearam a nossa missão. Aqui, o princípio permanece inalterado: acima de tudo, estão os animais.',
-    imageUrl: 'https://images.pexels.com/photos/17036739/pexels-photo-17036739.jpeg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/ar_3:4,c_crop/c_fill,g_north,h_221,w_394/IMG_3127_uivuqz2_wbrmsq.jpg'
   },
   {
     year: 2025,
     title: 'Remodelação de algumas instalações',
-    description: 'TODO Remove ? Hoje, olhamos para trás com orgulho e para a frente com esperança. Continuamos a crescer, a aprender e a lutar por um mundo mais justo para todos os animais. A nossa história é feita de conquistas, desafios e muito amor e ainda agora começou.',
-    imageUrl: 'https://images.pexels.com/photos/7516363/pexels-photo-7516363.jpeg'
+    description: 'Foram realizadas obras de remodelações na lavandaeria e na enfermaria',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771244516/IMG_7286_u4knxb.jpg'
   }
 ])
 
@@ -89,7 +89,7 @@ const milestones = ref([
         <div class="bg-primary-50 rounded-lg p-8 border border-primary-100">
           <div class="flex flex-col md:flex-row gap-8 items-center">
             <div class="md:w-1/3">
-              <img src="https://images.pexels.com/photos/7474346/pexels-photo-7474346.jpeg" alt="Nossa Missão" 
+              <img src="https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-09-14-15-31-19_rpgcq1.jpg" alt="Nossa Missão" 
                 class="rounded-lg shadow-md w-full h-auto object-cover aspect-square" />
             </div>
             <div class="md:w-2/3">

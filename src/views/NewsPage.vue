@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useNewsStore } from '../stores/news'
 import NewsCard from '../components/news/NewsCard.vue'
 
-const router = useRouter()
 const newsStore = useNewsStore()
 const isLoading = ref(true)
 const searchQuery = ref('')
@@ -16,17 +14,13 @@ onMounted(async () => {
 
 const filteredNews = computed(() => {
   if (!searchQuery.value) return newsStore.news
-  
+
   const query = searchQuery.value.toLowerCase()
-  return newsStore.news.filter(item => 
-    item.title.toLowerCase().includes(query) || 
+  return newsStore.news.filter(item =>
+    item.title.toLowerCase().includes(query) ||
     item.excerpt.toLowerCase().includes(query)
   )
 })
-
-const viewNewsDetails = (id: string) => {
-  router.push(`/noticias/${id}`)
-}
 </script>
 
 <template>

@@ -10,8 +10,8 @@ const router = useRouter()
 const animalsStore = useAnimalsStore()
 const newsStore = useNewsStore()
 
-const featuredAnimals = ref([])
-const latestNews = ref([])
+const featuredAnimals = ref<typeof animalsStore.animals>([])
+const latestNews = ref<typeof newsStore.news>([])
 
 onMounted(async () => {
   // Fetch featured animals and latest news
@@ -40,7 +40,7 @@ const goToPage = (route: string) => {
       <!-- Hero Background Image -->
       <div class="absolute inset-0 z-0">
         <img 
-          src="https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+          src="https://res.cloudinary.com/dlqmc28to/image/upload/v1765752113/Micas_New_zs3sbh_gr0fna.jpg"
           alt="Happy dog" 
           class="w-full h-full object-cover"
         >
@@ -192,7 +192,7 @@ const goToPage = (route: string) => {
           <div class="md:w-1/2">
             <div class="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-xl">
             
-              <img src="https://images.pexels.com/photos/12195429/pexels-photo-12195429.jpeg" alt="Dogs in Animal Shelter" 
+              <img src="https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-09-14-15-31-53_aedog5.jpg" alt="Dogs in Animal Shelter" 
                 class="w-full h-full object-cover" />
             </div>
           </div>
