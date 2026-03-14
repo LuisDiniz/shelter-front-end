@@ -110,7 +110,7 @@ const adoptAnimal = () => {
               @click="adoptAnimal"
               class="btn btn-primary w-full md:w-auto md:px-12 py-3 text-lg"
             >
-              Adoptar ou Apadrinhar
+              Adotar
             </button>
           </div>
         </div>
