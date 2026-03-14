@@ -27,10 +27,10 @@ FORM_ENDPOINT_VOLUNTEER=https://formspree.io/f/your-form-id
 
 ```
 vercel dev
-? Set up and develop “~/Documents/Projetos/shelter-front-end”? 
+? Set up and develop “shelter-front-end”? 
 yes
 ? Which scope should contain your project? 
-luisdiniz's projects
+voluntarios-seixal
 Would you like to pull environment variables now? 
 yes
 ```
