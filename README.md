@@ -16,14 +16,24 @@ Node versão 18+. Testado com Node versão 23.11.0
 2. Instale as dependências:
 > npm install
 
-3. Atualize a variável de ambiente FORMSPREE_ENDPOINT no ficheiro .env para adicionar um form id de teste para enviar os emails dos formulários:
+3. Atualize as variável de ambientes com o endpoint do FORMSPREE no ficheiro .env para adicionar um form id de teste para enviar os emails dos formulários:
 
 ```
 FORM_ENDPOINT_ADOPTION=https://formspree.io/f/your-form-id
+FORM_ENDPOINT_VOLUNTEER=https://formspree.io/f/your-form-id
 ```
 
 3. Inicie a applicação:
-> vercel dev
+
+```
+vercel dev
+? Set up and develop “~/Documents/Projetos/shelter-front-end”? 
+yes
+? Which scope should contain your project? 
+luisdiniz's projects
+Would you like to pull environment variables now? 
+yes
+```
 
 4. Acesse o seguinte endereço no navegador:
 

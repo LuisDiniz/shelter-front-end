@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAnimalsStore } from '../stores/animals'
 import { useForm, Field } from 'vee-validate'
@@ -37,20 +37,16 @@ const schema = yup.object({
     .email('Formato de e-mail inválido'),
   phone: yup.string()
     .required('Telemóvel é obrigatório')
-    .matches(/^\d{9,12}$/, 'Telemóvel deve ter entre 9 e 12 dígitos'),
-  requestType: yup.string()
-    .required('Por favor, selecione uma opção')
-    .oneOf(['adoption', 'sponsorship'], 'Opção inválida')
+    .matches(/^\d{9,12}$/, 'Telemóvel deve ter entre 9 e 12 dígitos')
 })
 
-const { handleSubmit, values, resetForm } = useForm({
+const { handleSubmit, resetForm } = useForm({
   validationSchema: schema,
   initialValues: {
     fullName: '',
     animalName: '',
     email: '',
-    phone: '',
-    requestType: ''
+    phone: ''  
   }
 })
 
@@ -71,8 +67,7 @@ onMounted(async () => {
         fullName: '',
         animalName: animal.value.name,
         email: '',
-        phone: '',
-        requestType: ''
+        phone: ''
       }
     })
   } else {
@@ -80,12 +75,6 @@ onMounted(async () => {
   }
 
   isLoading.value = false
-})
-
-const requestTypeLabel = computed(() => {
-  if (values.requestType === 'adoption') return 'Adoção'
-  if (values.requestType === 'sponsorship') return 'Apadrinhamento'
-  return ''
 })
 
 const onSubmit = handleSubmit(async (values) => {
@@ -149,9 +138,9 @@ const onSubmit = handleSubmit(async (values) => {
         <!-- Form -->
         <div v-else class="bg-white rounded-lg shadow-md overflow-hidden">
           <div class="bg-primary-500 p-6 text-white">
-            <h1 class="text-2xl font-bold">{{ requestTypeLabel || 'Formulário de Adoção/Apadrinhamento' }}</h1>
+            <h1 class="text-2xl font-bold">Formulário de Adoção</h1>
             <p class="mt-2">
-              Por favor, preencha os dados abaixo para iniciar o processo de {{ requestTypeLabel || 'adoção ou apadrinhamento' }}.
+              Por favor, preencha os dados abaixo para iniciar o processo de adoção.
             </p>
           </div>
 
@@ -187,7 +176,7 @@ const onSubmit = handleSubmit(async (values) => {
 
               <!-- Animal Name (Read-only) -->
               <div>
-                <label for="animalName" class="block text-sm font-medium text-secondary-700 mb-1">Nome do animal apadrinhado</label>
+                <label for="animalName" class="block text-sm font-medium text-secondary-700 mb-1">Nome do animal</label>
                 <Field name="animalName" v-slot="{ field }">
                   <input 
                     type="text" 
@@ -228,36 +217,6 @@ const onSubmit = handleSubmit(async (values) => {
                   />
                   <p v-if="errorMessage" class="mt-1 text-sm text-error-500">{{ errorMessage }}</p>
                 </Field>
-              </div>
-
-              <!-- Request Type -->
-              <div>
-                <label class="block text-sm font-medium text-secondary-700 mb-1">O que deseja?</label>
-                <div class="mt-2 space-y-2">
-                  <Field name="requestType" v-slot="{ field, errorMessage }">
-                    <div>
-                      <label class="flex items-center">
-                        <input
-                          type="radio"
-                          v-bind="field"
-                          :value="'adoption'"
-                          class="h-4 w-4 text-primary-500 focus:ring-primary-500 border-gray-300"
-                        />
-                        <span class="ml-2 text-secondary-700">Quero Adotar</span>
-                      </label>
-                      <label class="flex items-center mt-2">
-                        <input
-                          type="radio"
-                          v-bind="field"
-                          :value="'sponsorship'"
-                          class="h-4 w-4 text-primary-500 focus:ring-primary-500 border-gray-300"
-                        />
-                        <span class="ml-2 text-secondary-700">Quero Apadrinhar</span>
-                      </label>
-                      <p v-if="errorMessage" class="mt-1 text-sm text-error-500">{{ errorMessage }}</p>
-                    </div>
-                  </Field>
-                </div>
               </div>
 
               <!-- Submit Button -->
