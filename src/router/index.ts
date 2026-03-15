@@ -7,6 +7,7 @@ import NewsPage from '../views/NewsPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import AdminPage from '../views/AdminPage.vue'
 import AdoptionFormPage from '../views/AdoptionFormPage.vue'
+import VolunteerFormPage from '../views/VolunteerFormPage.vue'
 import NewsDetailPage from '../views/NewsDetailPage.vue'
 import AnimalDetailPage from '../views/AnimalDetailPage.vue'
 import NotFoundPage from '../views/NotFoundPage.vue'
@@ -64,6 +65,11 @@ const routes: RouteRecordRaw[] = [
     name: 'AdoptionForm',
     component: AdoptionFormPage,
     props: true
+  },
+  {
+    path: '/voluntario',
+    name: 'VolunteerForm',
+    component: VolunteerFormPage
   },
   {
     path: '/:pathMatch(.*)*',

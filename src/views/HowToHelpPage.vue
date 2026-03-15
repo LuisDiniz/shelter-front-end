@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const donationOptions = ref([
   {
@@ -170,7 +173,7 @@ const otherWaysToHelp = ref([
           <p class="text-secondary-700 mb-4">
             Para se tornar um voluntário, preencha nosso formulário online ou entre em contato diretamente conosco.
           </p>
-          <button class="btn btn-primary">Inscrever-se como voluntário</button>
+          <button class="btn btn-primary" @click="router.push('/voluntario')">Inscrever-se como voluntário</button>
         </div>
       </section>
 
