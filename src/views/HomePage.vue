@@ -169,7 +169,7 @@ const goToPage = (route: string) => {
 
         <div class="text-center mt-10">
           <button @click="goToPage('/como-ajudar')" class="btn btn-secondary">
-            Saiba outras formas de ajudar
+            Saiba como ajudar
           </button>
         </div>
       </div>
