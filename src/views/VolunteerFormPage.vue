@@ -35,13 +35,7 @@ const onSubmit = handleSubmit(async (values) => {
   isSubmitting.value = true
 
   try {
-    const formEndpoint = import.meta.env.VITE_FORM_ENDPOINT_VOLUNTEER
-
-    if (!formEndpoint) {
-      throw new Error('Form endpoint not configured')
-    }
-
-    const response = await fetch(formEndpoint, {
+    const response = await fetch('/api/sendVolunteerEmail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
