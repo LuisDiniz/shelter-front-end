@@ -17,70 +17,97 @@ interface NewsItem {
 const mockNews: NewsItem[] = [
   {
     id: '1',
-    title: 'Campanha de Adoção Especial - "Um Lar para Todos"',
-    excerpt: 'Participe da nossa campanha especial de adoção este final de semana e ajude os nossos animais a encontrar um lar amoroso.',
-    content: `<p>Este fim de semana, o Canil/Gatil Municipal do Seixal realiza a campanha "Um Lar para Todos", uma iniciativa especial de adoção que visa encontrar lares amorosos para os nossos animais.</p>
-    <p>A campanha acontecerá nos dias 25 e 26 de junho, das 10h às 18h, nas nossas instalações. Durante o evento, teremos:</p>
+    title: 'O CROACS vai às ruas aos sábados',
+    excerpt: 'O CROACS Sai à Rua aconteceu no dia 21 de fevereiro de 2026 e foi um verdadeiro sucesso, levando o Centro de Recolha Oficial de Animais de Companhia do Seixal (CROACS) e o Grupo de Voluntários no Canil/Gatil Municipal do Seixal a procurar realizar a iniciativa todos os sábados.',
+    content: `<p>O objetivo passa por proporcionar de forma regular momentos especiais como os vividos no passado dia 21 de fevereiro, marcados por passeios, brincadeira e socialização com os patudos que aguardam adoção responsável.</p>
+    <p>O CROACS volta assim a sair à rua já este sábado, 28 de fevereiro, das 10 às 12.30 horas. A realização da iniciativa nos sábados seguintes será previamente comunicada nas redes sociais da autarquia e na agenda do site.</p>
+    <p>Participe nestas ações simples, mas que fazem toda a diferença para os patudos!</p>
+    <p><b>Ponto de encontro:</b> Frente ribeirinha, junto ao CROACS (Av. da República n.º 175, Arrentela – Seixal)</p>
+    <p>O Grupo de Voluntários no Canil/Gatil Municipal do Seixal representa um apoio fundamental e um parceiro ativo e dedicado à causa animal, assegurando melhor qualidade de vida aos animais acolhidos no CROACS, proporcionando-lhes contacto humano, estímulos exteriores e momentos essenciais de socialização, como:</p>
+    
     <ul>
-      <li>Sessões de aconselhamento sobre adoção responsável</li>
-      <li>Veterinários disponíveis para responder a perguntas sobre cuidados com os animais</li>
-      <li>Brindes para quem adotar um animal durante o evento</li>
-      <li>Café e snacks para os visitantes</li>
+      <li>Passeios ao ar livre: socialização essencial, tanto com humanos como com outros estímulos do exterior;</li>
+      <li>Interação humana positiva: contacto com o ambiente exterior;</li>
+      <li>Socialização essencial: momentos de brincadeira e liberdade, que contribuem para o bem-estar físico e emocional;</li>
+      <li>Brincadeiras e estímulos novos: interação positiva, reforçando a confiança e facilitando futuras adoções.</li>
     </ul>
-    <p>Todos os animais adotados durante a campanha já estarão vacinados, desparasitados e esterilizados.</p>
-    <blockquote>
-      <p>"Adotar um animal é dar uma segunda chance a um ser que só quer amar e ser amado. Esperamos que muitos dos nossos queridos cães e gatos encontrem famílias durante esta campanha", diz Maria Santos, coordenadora do abrigo.</p>
-    </blockquote>
-    <p>Não perca esta oportunidade de transformar a sua vida e a de um animal carente. Venha conhecer nossos amigos de quatro patas que estão à espera de um lar!</p>`,
-    date: '2023-06-20T10:00:00Z',
-    author: 'Ana Rodrigues',
-    imageUrl: 'https://images.pexels.com/photos/1904105/pexels-photo-1904105.jpeg',
-    tags: ['adoção', 'campanha', 'evento']
-  },
-  {
-    id: '2',
-    title: 'Novo Espaço para Reabilitação de Animais Inaugurado',
-    excerpt: 'O Canil/Gatil Municipal do Seixal inaugurou um novo espaço dedicado à reabilitação de animais com necessidades especiais.',
-    content: `<p>Com grande alegria, anunciamos a inauguração do nosso novo espaço dedicado à reabilitação de animais com necessidades especiais. Este projeto, que esteve em desenvolvimento durante mais de um ano, finalmente tornou-se realidade graças ao apoio de doadores e voluntários dedicados.</p>
-    <p>O novo espaço conta com:</p>
-    <ul>
-      <li>Área para fisioterapia animal</li>
-      <li>Equipamentos especializados para reabilitação</li>
-      <li>Espaço acolhedor para animais em recuperação</li>
-      <li>Sala de treino para socialização</li>
-    </ul>
-    <p>Este investimento representa um grande avanço na nossa missão de cuidar de todos os animais, independentemente das suas condições de saúde ou desafios físicos.</p>
-    <p>A cerimônia de inauguração contou com a presença de autoridades locais, voluntários e apoiadores do abrigo. Foi um momento emocionante para todos que acompanharam o desenvolvimento deste projeto desde o início.</p>
-    <p>Agradecemos a todos que contribuíram para tornar este sonho realidade. Com este novo espaço, poderemos ajudar ainda mais animais a recuperar-se e encontrar lares amorosos.</p>`,
-    date: '2023-05-15T14:30:00Z',
-    author: 'Carlos Mendes',
-    imageUrl: 'https://images.pexels.com/photos/6816849/pexels-photo-6816849.jpeg',
-    tags: ['infraestrutura', 'reabilitação', 'novidades']
-  },
-  {
-    id: '3',
-    title: 'Doação de Ração e Materiais Recebida de Empresa Local',
-    excerpt: 'A empresa PetCare Portugal fez uma generosa doação de ração e materiais para os animais do nosso abrigo.',
-    content: `<p>Estamos extremamente gratos à empresa PetCare Portugal pela generosa doação recebida esta semana. A contribuição incluiu:</p>
-    <ul>
-      <li>500kg de ração para cães</li>
-      <li>300kg de ração para gatos</li>
-      <li>Cobertores e camas</li>
-      <li>Brinquedos e acessórios</li>
-      <li>Produtos de limpeza especializados</li>
-    </ul>
-    <p>Esta doação ajudará a manter nossos animais bem alimentados e confortáveis nos próximos meses. Parcerias como esta são fundamentais para a sustentabilidade do nosso trabalho.</p>
-    <blockquote>
-      <p>"Apoiar iniciativas como o Canil/Gatil Municipal do Seixal faz parte da nossa responsabilidade social corporativa. Estamos felizes em poder contribuir para o bem-estar desses animais", afirmou João Silva, diretor da PetCare Portugal.</p>
-    </blockquote>
-    <p>Encorajamos outras empresas locais a seguirem este exemplo, pois toda ajuda é valiosa para mantermos nosso trabalho de resgate e cuidado dos animais abandonados.</p>
-    <p>Se sua empresa também deseja fazer uma doação, entre em contato conosco. Juntos, podemos fazer a diferença na vida desses animais!</p>`,
-    date: '2023-04-10T09:15:00Z',
-    author: 'Sofia Almeida',
-    imageUrl: 'https://images.pexels.com/photos/5731866/pexels-photo-5731866.jpeg',
-    tags: ['doação', 'parceria', 'empresas']
+    
+    <br/>
+    <p><b>Fonte:</b> <a href="https://www.cm-seixal.pt/noticia/o-croacs-volta-sair-rua-ja-este-sabado">https://www.cm-seixal.pt/noticia/o-croacs-volta-sair-rua-ja-este-sabado</a></p>`,
+    date: '2023-02-21T10:00:00Z',
+    author: 'Câmera Municipal do Seixal',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1773879116/Passeio_gyecxx.jpg',
+    tags: ['CROACS', 'cães', 'passeios']
   }
 ]
+
+
+//   {
+//     id: '1',
+//     title: 'Campanha de Adoção Especial - "Um Lar para Todos"',
+//     excerpt: 'Participe da nossa campanha especial de adoção este final de semana e ajude os nossos animais a encontrar um lar amoroso.',
+//     content: `<p>Este fim de semana, o Canil/Gatil Municipal do Seixal realiza a campanha "Um Lar para Todos", uma iniciativa especial de adoção que visa encontrar lares amorosos para os nossos animais.</p>
+//     <p>A campanha acontecerá nos dias 25 e 26 de junho, das 10h às 18h, nas nossas instalações. Durante o evento, teremos:</p>
+//     <ul>
+//       <li>Sessões de aconselhamento sobre adoção responsável</li>
+//       <li>Veterinários disponíveis para responder a perguntas sobre cuidados com os animais</li>
+//       <li>Brindes para quem adotar um animal durante o evento</li>
+//       <li>Café e snacks para os visitantes</li>
+//     </ul>
+//     <p>Todos os animais adotados durante a campanha já estarão vacinados, desparasitados e esterilizados.</p>
+//     <blockquote>
+//       <p>"Adotar um animal é dar uma segunda chance a um ser que só quer amar e ser amado. Esperamos que muitos dos nossos queridos cães e gatos encontrem famílias durante esta campanha", diz Maria Santos, coordenadora do abrigo.</p>
+//     </blockquote>
+//     <p>Não perca esta oportunidade de transformar a sua vida e a de um animal carente. Venha conhecer nossos amigos de quatro patas que estão à espera de um lar!</p>`,
+//     date: '2023-06-20T10:00:00Z',
+//     author: 'Ana Rodrigues',
+//     imageUrl: 'https://images.pexels.com/photos/1904105/pexels-photo-1904105.jpeg',
+//     tags: ['adoção', 'campanha', 'evento']
+//   },
+//   {
+//     id: '2',
+//     title: 'Novo Espaço para Reabilitação de Animais Inaugurado',
+//     excerpt: 'O Canil/Gatil Municipal do Seixal inaugurou um novo espaço dedicado à reabilitação de animais com necessidades especiais.',
+//     content: `<p>Com grande alegria, anunciamos a inauguração do nosso novo espaço dedicado à reabilitação de animais com necessidades especiais. Este projeto, que esteve em desenvolvimento durante mais de um ano, finalmente tornou-se realidade graças ao apoio de doadores e voluntários dedicados.</p>
+//     <p>O novo espaço conta com:</p>
+//     <ul>
+//       <li>Área para fisioterapia animal</li>
+//       <li>Equipamentos especializados para reabilitação</li>
+//       <li>Espaço acolhedor para animais em recuperação</li>
+//       <li>Sala de treino para socialização</li>
+//     </ul>
+//     <p>Este investimento representa um grande avanço na nossa missão de cuidar de todos os animais, independentemente das suas condições de saúde ou desafios físicos.</p>
+//     <p>A cerimônia de inauguração contou com a presença de autoridades locais, voluntários e apoiadores do abrigo. Foi um momento emocionante para todos que acompanharam o desenvolvimento deste projeto desde o início.</p>
+//     <p>Agradecemos a todos que contribuíram para tornar este sonho realidade. Com este novo espaço, poderemos ajudar ainda mais animais a recuperar-se e encontrar lares amorosos.</p>`,
+//     date: '2023-05-15T14:30:00Z',
+//     author: 'Carlos Mendes',
+//     imageUrl: 'https://images.pexels.com/photos/6816849/pexels-photo-6816849.jpeg',
+//     tags: ['infraestrutura', 'reabilitação', 'novidades']
+//   },
+//   {
+//     id: '3',
+//     title: 'Doação de Ração e Materiais Recebida de Empresa Local',
+//     excerpt: 'A empresa PetCare Portugal fez uma generosa doação de ração e materiais para os animais do nosso abrigo.',
+//     content: `<p>Estamos extremamente gratos à empresa PetCare Portugal pela generosa doação recebida esta semana. A contribuição incluiu:</p>
+//     <ul>
+//       <li>500kg de ração para cães</li>
+//       <li>300kg de ração para gatos</li>
+//       <li>Cobertores e camas</li>
+//       <li>Brinquedos e acessórios</li>
+//       <li>Produtos de limpeza especializados</li>
+//     </ul>
+//     <p>Esta doação ajudará a manter nossos animais bem alimentados e confortáveis nos próximos meses. Parcerias como esta são fundamentais para a sustentabilidade do nosso trabalho.</p>
+//     <blockquote>
+//       <p>"Apoiar iniciativas como o Canil/Gatil Municipal do Seixal faz parte da nossa responsabilidade social corporativa. Estamos felizes em poder contribuir para o bem-estar desses animais", afirmou João Silva, diretor da PetCare Portugal.</p>
+//     </blockquote>
+//     <p>Encorajamos outras empresas locais a seguirem este exemplo, pois toda ajuda é valiosa para mantermos nosso trabalho de resgate e cuidado dos animais abandonados.</p>
+//     <p>Se sua empresa também deseja fazer uma doação, entre em contato conosco. Juntos, podemos fazer a diferença na vida desses animais!</p>`,
+//     date: '2023-04-10T09:15:00Z',
+//     author: 'Sofia Almeida',
+//     imageUrl: 'https://images.pexels.com/photos/5731866/pexels-photo-5731866.jpeg',
+//     tags: ['doação', 'parceria', 'empresas']
+//   }
+// ]
 
 export const useNewsStore = defineStore('news', () => {
   const news = ref<NewsItem[]>([])

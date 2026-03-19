@@ -53,14 +53,8 @@ const filteredNews = computed(() => {
         <div class="text-secondary-400 text-6xl mb-4">📰</div>
         <h3 class="text-xl font-semibold text-secondary-800 mb-2">Nenhuma notícia encontrada</h3>
         <p class="text-secondary-600 mb-4">
-          Não encontramos nenhuma notícia correspondente à sua busca.
+          Não existem notícias ainda
         </p>
-        <button 
-          @click="searchQuery = ''"
-          class="btn btn-secondary"
-        >
-          Limpar busca
-        </button>
       </div>
     </div>
   </div>
