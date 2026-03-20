@@ -32,7 +32,7 @@ const milestones = ref([
     year: 2014,
     title: 'Cedência das Instalações Atuais',
     description: 'Foi-nos cedido o espaço onde atualmente desenvolvemos grande parte do nosso trabalho. Apesar das limitações estruturais, este local tornou-se um verdadeiro refúgio para os nossos animais. Pode não haver luxo, mas há amor, dedicação e respeito valores que sempre nortearam a nossa missão. Aqui, o princípio permanece inalterado: acima de tudo, estão os animais.',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/ar_3:4,c_crop/c_fill,g_north,h_221,w_394/IMG_3127_uivuqz2_wbrmsq.jpg'
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1774033106/WhatsApp_Image_2026-03-20_at_18.57.47_rx6oxf.jpg'
   },
   {
     year: 2025,
