@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useNewsStore } from '../stores/news'
+import ImageModal from '../components/common/ImageModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -10,6 +11,7 @@ const newsStore = useNewsStore()
 const newsItem = ref<typeof newsStore.news[0] | null>(null)
 const isLoading = ref(true)
 const formattedDate = ref('')
+const isImageModalOpen = ref(false)
 
 onMounted(async () => {
   const newsId = route.params.id as string
@@ -45,6 +47,14 @@ const goBack = () => {
 const viewNewsDetails = (id: string) => {
   router.push(`/noticias/${id}`)
 }
+
+const openImageModal = () => {
+  isImageModalOpen.value = true
+}
+
+const closeImageModal = () => {
+  isImageModalOpen.value = false
+}
 </script>
 
 <template>
@@ -58,19 +68,29 @@ const viewNewsDetails = (id: string) => {
       <!-- News Article -->
       <div v-else-if="newsItem" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <!-- Featured Image -->
-        <div class="relative">
+        <div class="relative group">
           <img
             :src="newsItem.imageUrl"
             :alt="newsItem.title"
-            class="w-full h-80 object-cover"
+            class="w-full h-80 object-cover cursor-pointer transition-opacity hover:opacity-90"
+            @click="openImageModal"
           />
           <button
             @click="goBack"
-            class="absolute top-4 left-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
+            class="absolute top-4 left-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors z-10"
             aria-label="Voltar"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <button
+            @click="openImageModal"
+            class="absolute top-4 right-4 bg-white/90 hover:bg-white text-secondary-800 rounded-full p-2 transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-lg hover:shadow-xl z-10"
+            aria-label="Expandir imagem"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6v4m0-4l4-4m-4 4L6 2m4 4h4v4m0-4l4-4m-4 4l4 4M10 18H6v-4m0 4l-4 4m4-4l4 4m8-18h-4v4m0-4l4-4m-4 4l4-4m-4 4h4v4m0-4l4-4m-4 4l4 4" />
             </svg>
           </button>
         </div>
@@ -136,6 +156,14 @@ const viewNewsDetails = (id: string) => {
           </div>
         </div>
       </div>
+
+      <!-- Image Modal -->
+      <ImageModal
+        :isOpen="isImageModalOpen"
+        :imageUrl="newsItem?.imageUrl || ''"
+        :altText="newsItem?.title || ''"
+        @close="closeImageModal"
+      />
 
       <!-- Related News -->
       <div v-if="!isLoading && newsStore.relatedNews.length > 0" class="max-w-4xl mx-auto mt-12">
