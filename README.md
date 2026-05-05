@@ -25,6 +25,10 @@ FORM_ENDPOINT_VOLUNTEER=https://formspree.io/f/your-form-id
 
 3. Inicie a applicação:
 
+> npm run dev
+
+Para testar todos os recursos da aplicação pode ser necessário iniciar a aplicação com o vercel:
+
 > vercel dev
 
 A primeira vez pode ser preciso sincronizar com repositório do vercel:

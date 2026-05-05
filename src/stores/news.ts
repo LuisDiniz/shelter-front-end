@@ -17,6 +17,58 @@ interface NewsItem {
 const mockNews: NewsItem[] = [
   {
     id: '1',
+    title: 'Cãominhada no parque da amora',
+    excerpt: 'Participe na Cãominhada 2026, no dia 9 de maio, no Parque da Amora. Uma iniciativa solidária aberta a toda a comunidade, com inscrições gratuitas e recolha de donativos para apoiar animais do concelho do Seixal.',
+    content: `
+  <p>
+    No próximo dia <strong>9 de maio, às 9h00</strong>, realiza-se no 
+    <strong>Parque da Amora</strong> mais uma edição da já habitual 
+    <strong>Cãominhada</strong>, uma iniciativa solidária que convida toda a comunidade 
+    a participar numa manhã diferente, em companhia dos seus amigos de quatro patas.
+  </p>
+
+  <p>
+    O ponto de encontro será no <strong>CROACS – Centro de Recolha Oficial de Animais de 
+    Companhia do Seixal</strong>, situado na Av. da República, n.º 175, em Arrentela. 
+    A participação é <strong>gratuita</strong> e aberta a todos, podendo a inscrição ser 
+    feita antecipadamente através do email 
+    <a href="mailto:caominhada2026@gmail.com">caominhada2026@gmail.com</a> 
+    ou no próprio dia, no local.
+  </p>
+
+  <p>
+    Para além do convívio e da atividade física ao ar livre, esta iniciativa tem também 
+    um forte cariz solidário. Os participantes são convidados a contribuir com 
+    <strong>donativos</strong>, nomeadamente:
+  </p>
+
+  <ul>
+    <li>Ração seca e húmida para cães e gatos</li>
+    <li>Mantas e camas</li>
+    <li>Areia para gatos</li>
+  </ul>
+
+  <p>
+    Os participantes terão ainda direito a um <strong>kit de participação</strong>, 
+    tornando esta experiência ainda mais especial.
+  </p>
+
+  <p>
+    Organizada com o apoio de entidades locais, a Cãominhada pretende promover o 
+    bem-estar animal, sensibilizar para a adoção responsável e reforçar os laços entre a 
+    comunidade e as associações de proteção animal.
+  </p>
+
+  <p>
+    <strong>Traga a família, convide amigos e venha fazer parte desta caminhada solidária!</strong>
+  </p>`,
+    date: '2026-05-05T22:00:00Z',
+    author: 'Grupo de voluntários no Canil-Gatil Municipal do Seixal',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1777999746/WhatsApp_Image_2026-05-03_at_10.39.30_rozuue.jpg',
+    tags: ['CROACS', 'cães', 'passeios', 'cãominhada']
+  },
+  {
+    id: '2',
     title: 'O CROACS vai às ruas aos sábados',
     excerpt: 'O CROACS Sai à Rua aconteceu no dia 21 de fevereiro de 2026 e foi um verdadeiro sucesso, levando o Centro de Recolha Oficial de Animais de Companhia do Seixal (CROACS) e o Grupo de Voluntários no Canil/Gatil Municipal do Seixal a procurar realizar a iniciativa todos os sábados.',
     content: `<p>O objetivo passa por proporcionar de forma regular momentos especiais como os vividos no passado dia 21 de fevereiro, marcados por passeios, brincadeira e socialização com os patudos que aguardam adoção responsável.</p>
@@ -34,11 +86,11 @@ const mockNews: NewsItem[] = [
     
     <br/>
     <p><b>Fonte:</b> <a href="https://www.cm-seixal.pt/noticia/o-croacs-volta-sair-rua-ja-este-sabado">https://www.cm-seixal.pt/noticia/o-croacs-volta-sair-rua-ja-este-sabado</a></p>`,
-    date: '2023-02-21T10:00:00Z',
+    date: '2026-02-21T10:00:00Z',
     author: 'Câmera Municipal do Seixal',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1773879116/Passeio_gyecxx.jpg',
     tags: ['CROACS', 'cães', 'passeios']
-  }
+  }  
 ]
 
 
