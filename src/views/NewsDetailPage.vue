@@ -90,7 +90,7 @@ const closeImageModal = () => {
             aria-label="Expandir imagem"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6v4m0-4l4-4m-4 4L6 2m4 4h4v4m0-4l4-4m-4 4l4 4M10 18H6v-4m0 4l-4 4m4-4l4 4m8-18h-4v4m0-4l4-4m-4 4l4-4m-4 4h4v4m0-4l4-4m-4 4l4 4" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-6-2l6-6m0 0V4m0 2h2" />
             </svg>
           </button>
         </div>
