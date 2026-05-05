@@ -21,33 +21,11 @@ const mockAnimals: Animal[] = [
     name: 'Léo',
     type: 'cat',
     gender: 'male',
-    age: 7,
-    description: 'Léo tem um feitio muito particular gosta de estar por perto, a observar-nos, é muito guloso e anda atrás dos biscoitos mas não é muito dado a festas. Evita o contato conosco ainda que esteja sempre atento a nós. Já com uma certa idade, gostas de sestas longas e de apanhar banhos de sol.',
+    age: 5,
+    description: 'Max é um cão muito carinhoso e brincalhão. Ele adora correr e brincar com bolas. É muito sociável com pessoas e outros cães.',
     breed: 'Europeu',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/Leo_ywbenz.jpg',
     images: ['https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/Leo_ywbenz.jpg']
-  },
-  {
-    id: '7',
-    name: 'Evaristo',
-    type: 'cat',
-    gender: 'male',
-    age: 8,
-    description: 'O Evaristo é um lindo e gorducho gatão. Foi adotado em Agosto de 2025, de quem fomos sempre tendo noticias até ao final do ano de 2025, mas infelizmente foi devolvido para a associação magro, pelo branco e olhar triste e teve que ficar internado. O Evaristo é um menino forte temos a certeza que vai recuperar.',
-    breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1773878172/Evaristo2_eywoqt.jpg',
-    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1773878172/Evaristo2_eywoqt.jpg','https://res.cloudinary.com/dlqmc28to/image/upload/v1773878172/Evaristo1_i5og24.jpg']
-  },  
-  {
-    id: '3',
-    name: 'Dentuças',
-    type: 'cat',
-    gender: 'female',
-    age: 7,
-    description: 'Dentuças foi diagnosticada com carcinoma na mandíbula. Dentuças mantém a doença controlada com medicação, segue ativa, brincalhona e cheia de vida, lembrando a todos que viver com esperança é uma forma de vencer todos os dias.',
-    breed: 'Europeu',
-    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg',
-    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg']
   },
   {
     id: '2',
@@ -55,17 +33,28 @@ const mockAnimals: Animal[] = [
     type: 'cat',
     gender: 'female',
     age: 8,
-    description: 'Malvadinha é uma gata medrosa e não gosta de muito contacto direto, ela ainda precisa ser conquistada. Malvadinha não liga muito para os biscoitos mas não resistem a um bom patê. Ela é um dos animais que já estão no abrigo há algum tempo também.',
+    description: 'Luna é uma gata muito calma e afetuosa. Ela adora deitar no colo e receber carinho. Está à procura de um lar tranquilo.',
     breed: 'Europeu',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg',
-    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg', 'https://res.cloudinary.com/dlqmc28to/image/upload/v1773838716/IMG_2720_ukzsdz.jpg']
-  },  
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/c_crop,g_custom/v1765832945/Malvadinha_wi7n6z.jpg']
+  },
+  {
+    id: '3',
+    name: 'Dentuças',
+    type: 'cat',
+    gender: 'female',
+    age: 5,
+    description: 'Dentuças foi diagnosticada com carcinoma na mandíbula. Dentuças mantém a doença controlada com medicação, segue ativa, brincalhona e cheia de vida, lembrando a todos que viver com esperança é uma forma de vencer todos os dias.',
+    breed: 'Europeu',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1765875774/Dentuc%CC%A7as_egitih.jpg']
+  },
   {
     id: '4',
     name: 'Palhacinho',
     type: 'cat',
     gender: 'male',
-    age: 9,
+    age: 8,
     description: 'Palhacinho enfrenta um linfoma nos intestinos, faz quimioterapia de 15 em 15 dias e toma corticoide diariamente. Mesmo nos dias mais frágeis, mantém o olhar brilhante e a vontade de dar alegria a quem está por perto. É a prova que coragem e ternura podem andar de mãos dadas.',
     breed: 'Europeu',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/IMG_1655_kqeqel',
@@ -76,7 +65,7 @@ const mockAnimals: Animal[] = [
     name: 'Manny',
     type: 'cat',
     gender: 'male',
-    age: 5,
+    age: 3,
     description: 'Manny tem um problema ósseo numa patinha que pode levar à amputação. Ainda assim, não perde a alegria nem a vontade de brincar. Mostra que a verdadeira coragem é seguir em frente, mesmo diante das incertezas.',
     breed: 'Europeu',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771244812/IMG_1657_gsuvtg.jpg',
@@ -87,11 +76,22 @@ const mockAnimals: Animal[] = [
     name: 'Malhadinha',
     type: 'cat',
     gender: 'female',
-    age: 6,
-    description: 'Malhadinha é muito medrosa e não gosta muito de festinhas, mas não recusa um patê. Malhadinha já está connosco há algum tempo a espera de uma família.',
+    age: 3,
+    description: 'Nina é uma gata muito independente mas carinhosa. Ela gosta de ter o seu espaço, mas também adora receber atenção.',
     breed: 'Europeu',
     imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771370818/Malhadinha_h00xmb.jpg',
     images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1771370818/Malhadinha_h00xmb.jpg']
+  },
+  {
+    id: '7',
+    name: 'Evaristo',
+    type: 'cat',
+    gender: 'male',
+    age: 8,
+    description: 'O Evaristo é um lindo e gorducho gatão. Foi adotado em Agosto de 2025, de quem fomos sempre tendo noticias até ao final do ano de 2025, mas infelizmente foi devolvido para a associação magro, pelo branco e olhar triste e teve que ficar internado. O Evaristo é um menino forte temos a certeza que vai recuperar.',
+    breed: 'Europeu',
+    imageUrl: 'https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-02-15-17-50-10_1_vxruno.jpg',
+    images: ['https://res.cloudinary.com/dlqmc28to/image/upload/v1771242682/PHOTO-2025-02-15-17-50-10_1_vxruno.jpg']
   }
 ]
 

@@ -95,7 +95,7 @@ const viewNewsDetails = (id: string) => {
 
           <h1 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4">{{ newsItem.title }}</h1>
 
-          <div class="news-content text-secondary-700" v-html="newsItem.content"></div>
+          <div class="prose max-w-none text-secondary-700" v-html="newsItem.content"></div>
 
           <!-- Tags -->
           <div class="mt-8 flex flex-wrap gap-2">
@@ -160,29 +160,3 @@ const viewNewsDetails = (id: string) => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.news-content :deep(p) {
-  margin-bottom: 1rem;
-}
-
-.news-content :deep(ul) {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0.75rem 0 1rem;
-}
-
-.news-content :deep(ol) {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 0.75rem 0 1rem;
-}
-
-.news-content :deep(li) {
-  margin: 0.25rem 0;
-}
-
-.news-content :deep(a) {
-  text-decoration: underline;
-}
-</style>

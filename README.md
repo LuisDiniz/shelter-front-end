@@ -25,11 +25,8 @@ FORM_ENDPOINT_VOLUNTEER=https://formspree.io/f/your-form-id
 
 3. Inicie a applicação:
 
-> vercel dev
-
-A primeira vez pode ser preciso sincronizar com repositório do vercel:
-
 ```
+vercel dev
 ? Set up and develop “shelter-front-end”? 
 yes
 ? Which scope should contain your project? 
