@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useForm, Field } from 'vee-validate'
 import * as yup from 'yup'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 const isLoading = ref(false)
 const loginError = ref('')
@@ -28,7 +29,8 @@ const onSubmit = handleSubmit(async (values) => {
     const success = await authStore.login(values.username, values.password)
     
     if (success) {
-      router.push('/admin')
+      const redirectPath = typeof route.query.redirect === 'string' ? route.query.redirect : '/admin'
+      router.push(redirectPath)
     } else {
       loginError.value = 'Credenciais inválidas. Por favor, tente novamente.'
     }

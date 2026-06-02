@@ -4,6 +4,20 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useAnimalsStore } from '../stores/animals'
 import { useNewsStore } from '../stores/news'
+import type { Animal, AnimalPayload, Gender, Species } from '../types/animal'
+
+interface AnimalForm {
+  id: string
+  name: string
+  species: Species
+  gender: Gender
+  age: number
+  description: string
+  breed: string
+  imageUrl: string
+  medicalHistory: string
+  vaccinations: string
+}
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -13,17 +27,23 @@ const newsStore = useNewsStore()
 // Navigation
 const activeTab = ref('animals')
 
-// Animal form
-const animalForm = ref({
+const getEmptyAnimalForm = (): AnimalForm => ({
   id: '',
   name: '',
-  type: 'dog',
+  species: 'dog',
   gender: 'male',
   age: 1,
   description: '',
   breed: '',
-  imageUrl: ''
+  imageUrl: '',
+  medicalHistory: '',
+  vaccinations: ''
 })
+
+const getSpeciesLabel = (species: Species) => species === 'dog' ? 'Cão' : 'Gato'
+const getGenderLabel = (gender: Gender) => gender === 'male' ? 'Macho' : 'Fêmea'
+
+const animalForm = ref<AnimalForm>(getEmptyAnimalForm())
 
 // News form
 const newsForm = ref({
@@ -46,7 +66,7 @@ const isLoading = ref(true)
 // Computed properties for form validation
 const isAnimalFormValid = computed(() => {
   const form = animalForm.value
-  return form.name && form.description && form.imageUrl && form.breed
+  return form.name && form.description && form.imageUrl && form.breed && form.age >= 0
 })
 
 const isNewsFormValid = computed(() => {
@@ -78,16 +98,7 @@ const setActiveTab = (tab: string) => {
 
 // Form management
 const resetForms = () => {
-  animalForm.value = {
-    id: '',
-    name: '',
-    type: 'dog',
-    gender: 'male',
-    age: 1,
-    description: '',
-    breed: '',
-    imageUrl: ''
-  }
+  animalForm.value = getEmptyAnimalForm()
   
   newsForm.value = {
     id: '',
@@ -111,8 +122,19 @@ const startAddAnimal = () => {
   isAddingAnimal.value = true
 }
 
-const startEditAnimal = (animal: typeof animalsStore.animals[0]) => {
-  animalForm.value = { ...animal }
+const startEditAnimal = (animal: Animal) => {
+  animalForm.value = {
+    id: animal.id,
+    name: animal.name,
+    species: animal.species,
+    gender: animal.gender,
+    age: animal.age,
+    description: animal.description,
+    breed: animal.breed,
+    imageUrl: animal.imageUrl,
+    medicalHistory: animal.medicalHistory,
+    vaccinations: animal.vaccinations
+  }
   isEditingAnimal.value = true
   isAddingAnimal.value = false
 }
@@ -120,15 +142,20 @@ const startEditAnimal = (animal: typeof animalsStore.animals[0]) => {
 const saveAnimal = async () => {
   if (!isAnimalFormValid.value) return
 
-  const animalData = {
-    ...animalForm.value,
-    type: animalForm.value.type as 'dog' | 'cat',
-    gender: animalForm.value.gender as 'male' | 'female'
+  const animalData: AnimalPayload = {
+    name: animalForm.value.name,
+    species: animalForm.value.species,
+    gender: animalForm.value.gender,
+    age: animalForm.value.age,
+    description: animalForm.value.description,
+    breed: animalForm.value.breed,
+    imageUrl: animalForm.value.imageUrl,
+    medicalHistory: animalForm.value.medicalHistory,
+    vaccinations: animalForm.value.vaccinations
   }
 
   if (isAddingAnimal.value) {
-    const { id, ...animalWithoutId } = animalData
-    await animalsStore.addAnimal(animalWithoutId)
+    await animalsStore.createAnimal(animalData)
   } else if (isEditingAnimal.value) {
     await animalsStore.updateAnimal(animalForm.value.id, animalData)
   }
@@ -272,12 +299,12 @@ const handleLogout = () => {
                   />
                 </div>
 
-                <!-- Type -->
+                <!-- Species -->
                 <div>
-                  <label for="type" class="block text-sm font-medium text-secondary-700 mb-1">Tipo</label>
+                  <label for="species" class="block text-sm font-medium text-secondary-700 mb-1">Espécie</label>
                   <select 
-                    id="type"
-                    v-model="animalForm.type"
+                    id="species"
+                    v-model="animalForm.species"
                     class="input-field"
                     required
                   >
@@ -338,6 +365,26 @@ const handleLogout = () => {
                     required
                   ></textarea>
                 </div>
+
+                <div class="md:col-span-2">
+                  <label for="medicalHistory" class="block text-sm font-medium text-secondary-700 mb-1">Histórico Médico</label>
+                  <textarea
+                    id="medicalHistory"
+                    v-model="animalForm.medicalHistory"
+                    rows="3"
+                    class="input-field"
+                  ></textarea>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="vaccinations" class="block text-sm font-medium text-secondary-700 mb-1">Vacinas</label>
+                  <textarea
+                    id="vaccinations"
+                    v-model="animalForm.vaccinations"
+                    rows="3"
+                    class="input-field"
+                  ></textarea>
+                </div>
               </div>
 
               <div class="flex justify-end space-x-4">
@@ -379,7 +426,7 @@ const handleLogout = () => {
                       Nome
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
-                      Tipo
+                      Espécie
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                       Raça
@@ -405,15 +452,15 @@ const handleLogout = () => {
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
-                        :class="animal.type === 'dog' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'">
-                        {{ animal.type === 'dog' ? 'Cão' : 'Gato' }}
+                        :class="animal.species === 'dog' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'">
+                        {{ getSpeciesLabel(animal.species) }}
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-600">
                       {{ animal.breed }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-600">
-                      {{ animal.gender === 'male' ? 'Macho' : 'Fêmea' }}
+                      {{ getGenderLabel(animal.gender) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-600">
                       {{ animal.age }} {{ animal.age === 1 ? 'ano' : 'anos' }}

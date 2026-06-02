@@ -16,12 +16,12 @@ const animalGender = computed(() => {
   return animal.value?.gender === 'male' ? 'Macho' : 'Fêmea'
 })
 
-const animalType = computed(() => {
-  return animal.value?.type === 'dog' ? 'Cão' : 'Gato'
+const animalSpecies = computed(() => {
+  return animal.value?.species === 'dog' ? 'Cão' : 'Gato'
 })
 
 const carouselImages = computed(() => {
-  return animal.value?.images || [animal.value?.imageUrl || '']
+  return animal.value ? [animal.value.imageUrl] : []
 })
 
 onMounted(async () => {
@@ -80,7 +80,7 @@ const adoptAnimal = () => {
                 <p class="text-gray-600 text-lg">{{ animal?.breed }}</p>
               </div>
               <div class="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full font-medium">
-                {{ animalType }}
+                {{ animalSpecies }}
               </div>
             </div>
 
