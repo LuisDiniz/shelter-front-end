@@ -75,7 +75,7 @@ const isLoading = ref(true)
 const isSavingAnimal = ref(false)
 const animalSaveError = ref('')
 const animalSuccessMessage = ref('')
-const animalSubmitHint = ref('')
+const isAnimalSubmitHintVisible = ref(false)
 const animalFormSubmitted = ref(false)
 const animalTouchedFields = ref<Record<RequiredAnimalField, boolean>>(getEmptyAnimalTouchedFields())
 const invalidAnimalSubmitHint = 'Preencha os campos obrigatórios assinalados.'
@@ -107,7 +107,7 @@ const isNewsFormValid = computed(() => {
 })
 
 const clearAnimalSubmitHint = () => {
-  animalSubmitHint.value = ''
+  isAnimalSubmitHintVisible.value = false
 
   if (animalSubmitHintTimeout) {
     window.clearTimeout(animalSubmitHintTimeout)
@@ -218,10 +218,10 @@ const showInvalidAnimalFormHint = () => {
   animalFormSubmitted.value = true
   markAllAnimalFieldsTouched()
   clearAnimalSubmitHint()
-  animalSubmitHint.value = invalidAnimalSubmitHint
+  isAnimalSubmitHintVisible.value = true
 
   animalSubmitHintTimeout = window.setTimeout(() => {
-    animalSubmitHint.value = ''
+    isAnimalSubmitHintVisible.value = false
     animalSubmitHintTimeout = undefined
   }, 3000)
 }
@@ -590,8 +590,13 @@ const handleLogout = () => {
                 >
                   Cancelar
                 </button>
-                <div class="flex flex-col items-start gap-2 sm:items-end">
-                  <span class="inline-flex" @click="handleAnimalSubmitClick">
+                <div class="flex items-start">
+                  <span
+                    class="group relative inline-flex"
+                    :class="{ 'cursor-not-allowed': !isAnimalFormValid }"
+                    @click="handleAnimalSubmitClick"
+                    @mouseleave="clearAnimalSubmitHint"
+                  >
                     <button 
                       type="submit"
                       class="btn"
@@ -603,19 +608,20 @@ const handleLogout = () => {
                             : 'btn-primary'
                       ]"
                       :disabled="isAnimalSubmitDisabled"
-                      :aria-describedby="animalSubmitHint ? 'animal-submit-hint' : undefined"
+                      :aria-describedby="!isAnimalFormValid ? 'animal-submit-hint' : undefined"
                     >
                       {{ isSavingAnimal ? 'A guardar...' : isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
                     </button>
+                    <span
+                      v-if="!isAnimalFormValid"
+                      id="animal-submit-hint"
+                      role="tooltip"
+                      class="pointer-events-none absolute bottom-full right-0 z-20 mb-2 w-max max-w-[16rem] rounded-md bg-secondary-800 px-3 py-2 text-xs font-medium leading-snug text-white shadow-lg transition-opacity duration-150 group-hover:opacity-100"
+                      :class="isAnimalSubmitHintVisible ? 'opacity-100' : 'opacity-0'"
+                    >
+                      {{ invalidAnimalSubmitHint }}
+                    </span>
                   </span>
-                  <p
-                    v-if="animalSubmitHint"
-                    id="animal-submit-hint"
-                    class="text-sm text-secondary-600 sm:text-right"
-                    aria-live="polite"
-                  >
-                    {{ animalSubmitHint }}
-                  </p>
                 </div>
               </div>
             </form>
