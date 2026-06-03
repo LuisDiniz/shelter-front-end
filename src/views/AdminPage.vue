@@ -62,6 +62,8 @@ const isEditingAnimal = ref(false)
 const isAddingNews = ref(false)
 const isEditingNews = ref(false)
 const isLoading = ref(true)
+const isSavingAnimal = ref(false)
+const animalSaveError = ref('')
 
 // Computed properties for form validation
 const isAnimalFormValid = computed(() => {
@@ -99,6 +101,7 @@ const setActiveTab = (tab: string) => {
 // Form management
 const resetForms = () => {
   animalForm.value = getEmptyAnimalForm()
+  animalSaveError.value = ''
   
   newsForm.value = {
     id: '',
@@ -140,7 +143,7 @@ const startEditAnimal = (animal: Animal) => {
 }
 
 const saveAnimal = async () => {
-  if (!isAnimalFormValid.value) return
+  if (!isAnimalFormValid.value || isSavingAnimal.value) return
 
   const animalData: AnimalPayload = {
     name: animalForm.value.name,
@@ -154,13 +157,23 @@ const saveAnimal = async () => {
     vaccinations: animalForm.value.vaccinations
   }
 
-  if (isAddingAnimal.value) {
-    await animalsStore.createAnimal(animalData)
-  } else if (isEditingAnimal.value) {
-    await animalsStore.updateAnimal(animalForm.value.id, animalData)
-  }
+  isSavingAnimal.value = true
+  animalSaveError.value = ''
 
-  resetForms()
+  try {
+    if (isAddingAnimal.value) {
+      await animalsStore.createAnimal(animalData)
+    } else if (isEditingAnimal.value) {
+      await animalsStore.updateAnimal(animalForm.value.id, animalData)
+    }
+
+    resetForms()
+  } catch (error) {
+    console.error('Error saving animal:', error)
+    animalSaveError.value = 'Não foi possível guardar o animal. Verifique os dados e tente novamente.'
+  } finally {
+    isSavingAnimal.value = false
+  }
 }
 
 const deleteAnimal = async (id: string) => {
@@ -388,6 +401,9 @@ const handleLogout = () => {
               </div>
 
               <div class="flex justify-end space-x-4">
+                <p v-if="animalSaveError" class="mr-auto text-sm text-error-600">
+                  {{ animalSaveError }}
+                </p>
                 <button 
                   type="button"
                   @click="resetForms"
@@ -396,11 +412,12 @@ const handleLogout = () => {
                   Cancelar
                 </button>
                 <button 
-                  type="submit"
+                  type="button"
+                  @click="saveAnimal"
                   class="btn btn-primary"
-                  :disabled="!isAnimalFormValid"
+                  :disabled="!isAnimalFormValid || isSavingAnimal"
                 >
-                  {{ isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
+                  {{ isSavingAnimal ? 'A guardar...' : isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
                 </button>
               </div>
             </form>
