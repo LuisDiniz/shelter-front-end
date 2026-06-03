@@ -101,6 +101,11 @@ const isAnimalFormValid = computed(() => {
 
 const isAnimalSubmitDisabled = computed(() => !isAnimalFormValid.value || isSavingAnimal.value)
 
+const animalNotificationMessage = computed(() => animalSaveError.value || animalSuccessMessage.value)
+const isAnimalNotificationError = computed(() => Boolean(animalSaveError.value))
+const animalNotificationRole = computed(() => isAnimalNotificationError.value ? 'alert' : 'status')
+const animalNotificationAriaLive = computed(() => isAnimalNotificationError.value ? 'assertive' : 'polite')
+
 const isNewsFormValid = computed(() => {
   const form = newsForm.value
   return form.title && form.excerpt && form.content && form.imageUrl
@@ -374,6 +379,18 @@ const handleLogout = () => {
       </div>
 
       <div v-else>
+        <div
+          v-if="animalNotificationMessage"
+          class="fixed left-4 right-4 top-4 z-50 rounded-md border px-4 py-3 text-sm shadow-lg sm:left-auto sm:right-6 sm:max-w-md"
+          :class="isAnimalNotificationError
+            ? 'border-error-500 bg-error-500/10 text-error-500'
+            : 'border-success-500 bg-success-500/10 text-secondary-800'"
+          :role="animalNotificationRole"
+          :aria-live="animalNotificationAriaLive"
+        >
+          {{ animalNotificationMessage }}
+        </div>
+
         <!-- Tab Navigation -->
         <div class="bg-white rounded-lg shadow-md mb-8">
           <div class="flex border-b">
@@ -396,20 +413,6 @@ const handleLogout = () => {
 
         <!-- Animals Tab -->
         <div v-if="activeTab === 'animals'">
-          <div
-            v-if="animalSuccessMessage"
-            class="bg-success-500/10 border border-success-500 text-secondary-800 px-4 py-3 rounded mb-6"
-          >
-            {{ animalSuccessMessage }}
-          </div>
-
-          <div
-            v-if="animalSaveError && !isAddingAnimal && !isEditingAnimal"
-            class="bg-error-500/10 border border-error-500 text-error-500 px-4 py-3 rounded mb-6"
-          >
-            {{ animalSaveError }}
-          </div>
-
           <!-- Animal Form (Add/Edit) -->
           <div v-if="isAddingAnimal || isEditingAnimal" class="bg-white rounded-lg shadow-md p-6 mb-8">
             <h2 class="text-xl font-semibold text-secondary-800 mb-4">
