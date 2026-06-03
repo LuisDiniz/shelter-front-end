@@ -75,8 +75,11 @@ const isLoading = ref(true)
 const isSavingAnimal = ref(false)
 const animalSaveError = ref('')
 const animalSuccessMessage = ref('')
+const animalSubmitHint = ref('')
 const animalFormSubmitted = ref(false)
 const animalTouchedFields = ref<Record<RequiredAnimalField, boolean>>(getEmptyAnimalTouchedFields())
+const invalidAnimalSubmitHint = 'Preencha os campos obrigatórios assinalados.'
+let animalSubmitHintTimeout: number | undefined
 
 // Computed properties for form validation
 const animalFieldErrors = computed<Record<RequiredAnimalField, string>>(() => {
@@ -96,10 +99,21 @@ const isAnimalFormValid = computed(() => {
   return Object.values(animalFieldErrors.value).every(error => !error)
 })
 
+const isAnimalSubmitDisabled = computed(() => !isAnimalFormValid.value || isSavingAnimal.value)
+
 const isNewsFormValid = computed(() => {
   const form = newsForm.value
   return form.title && form.excerpt && form.content && form.imageUrl
 })
+
+const clearAnimalSubmitHint = () => {
+  animalSubmitHint.value = ''
+
+  if (animalSubmitHintTimeout) {
+    window.clearTimeout(animalSubmitHintTimeout)
+    animalSubmitHintTimeout = undefined
+  }
+}
 
 // Authentication check
 onMounted(async () => {
@@ -128,6 +142,7 @@ const resetForms = () => {
   animalForm.value = getEmptyAnimalForm()
   animalSaveError.value = ''
   animalSuccessMessage.value = ''
+  clearAnimalSubmitHint()
   animalFormSubmitted.value = false
   animalTouchedFields.value = getEmptyAnimalTouchedFields()
   
@@ -156,6 +171,7 @@ const startAddAnimal = () => {
 const startEditAnimal = (animal: Animal) => {
   animalSaveError.value = ''
   animalSuccessMessage.value = ''
+  clearAnimalSubmitHint()
   animalFormSubmitted.value = false
   animalTouchedFields.value = getEmptyAnimalTouchedFields()
   animalForm.value = {
@@ -176,6 +192,7 @@ const startEditAnimal = (animal: Animal) => {
 
 const markAnimalFieldTouched = (field: RequiredAnimalField) => {
   animalTouchedFields.value[field] = true
+  clearAnimalSubmitHint()
 }
 
 const shouldShowAnimalFieldError = (field: RequiredAnimalField) => {
@@ -197,6 +214,24 @@ const markAllAnimalFieldsTouched = () => {
   }
 }
 
+const showInvalidAnimalFormHint = () => {
+  animalFormSubmitted.value = true
+  markAllAnimalFieldsTouched()
+  clearAnimalSubmitHint()
+  animalSubmitHint.value = invalidAnimalSubmitHint
+
+  animalSubmitHintTimeout = window.setTimeout(() => {
+    animalSubmitHint.value = ''
+    animalSubmitHintTimeout = undefined
+  }, 3000)
+}
+
+const handleAnimalSubmitClick = () => {
+  if (!isAnimalFormValid.value && !isSavingAnimal.value) {
+    showInvalidAnimalFormHint()
+  }
+}
+
 const saveAnimal = async () => {
   if (isSavingAnimal.value) return
 
@@ -206,9 +241,11 @@ const saveAnimal = async () => {
   animalSuccessMessage.value = ''
 
   if (!isAnimalFormValid.value) {
-    animalSaveError.value = 'Preencha os campos obrigatórios assinalados.'
+    showInvalidAnimalFormHint()
     return
   }
+
+  clearAnimalSubmitHint()
 
   const animalData: AnimalPayload = {
     name: animalForm.value.name,
@@ -542,7 +579,7 @@ const handleLogout = () => {
                 </div>
               </div>
 
-              <div class="flex justify-end space-x-4">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-end">
                 <p v-if="animalSaveError" class="mr-auto text-sm text-error-600">
                   {{ animalSaveError }}
                 </p>
@@ -553,13 +590,33 @@ const handleLogout = () => {
                 >
                   Cancelar
                 </button>
-                <button 
-                  type="submit"
-                  class="btn btn-primary"
-                  :disabled="isSavingAnimal"
-                >
-                  {{ isSavingAnimal ? 'A guardar...' : isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
-                </button>
+                <div class="flex flex-col items-start gap-2 sm:items-end">
+                  <span class="inline-flex" @click="handleAnimalSubmitClick">
+                    <button 
+                      type="submit"
+                      class="btn"
+                      :class="[
+                        !isAnimalFormValid
+                          ? 'cursor-not-allowed bg-gray-300 text-secondary-500 hover:bg-gray-300 pointer-events-none'
+                          : isSavingAnimal
+                            ? 'cursor-wait bg-primary-300 text-white hover:bg-primary-300 pointer-events-none'
+                            : 'btn-primary'
+                      ]"
+                      :disabled="isAnimalSubmitDisabled"
+                      :aria-describedby="animalSubmitHint ? 'animal-submit-hint' : undefined"
+                    >
+                      {{ isSavingAnimal ? 'A guardar...' : isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
+                    </button>
+                  </span>
+                  <p
+                    v-if="animalSubmitHint"
+                    id="animal-submit-hint"
+                    class="text-sm text-secondary-600 sm:text-right"
+                    aria-live="polite"
+                  >
+                    {{ animalSubmitHint }}
+                  </p>
+                </div>
               </div>
             </form>
           </div>
