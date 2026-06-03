@@ -51,22 +51,22 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateX(-50%) translateY(-20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
 @keyframes slideUp {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
   to {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateX(-50%) translateY(-20px);
   }
 }
 
@@ -79,7 +79,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .notification-banner {
-  @apply fixed left-1/2 top-24 z-40 w-[calc(100%-2rem)] -translate-x-1/2 rounded-lg px-6 py-4 md:w-4/5 lg:max-w-5xl transition-all duration-300 shadow-lg border-l-4;
+  @apply fixed left-1/2 top-24 z-40 w-[calc(100%-2rem)] rounded-lg px-6 py-4 md:w-4/5 lg:max-w-5xl shadow-lg border-l-4;
+  transform: translateX(-50%);
 }
 
 .notification-banner-success {
