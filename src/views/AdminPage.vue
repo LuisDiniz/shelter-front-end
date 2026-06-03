@@ -408,17 +408,22 @@ const handleLogout = () => {
       </div>
 
       <div v-else>
-        <div
-          v-if="animalNotificationMessage"
-          class="fixed left-1/2 top-24 z-40 w-[calc(100%-2rem)] -translate-x-1/2 rounded border px-4 py-3 md:w-4/5 lg:max-w-5xl"
-          :class="isAnimalNotificationError
-            ? 'border-error-500 bg-error-500/10 text-error-500'
-            : 'border-success-500 bg-success-500/10 text-secondary-800'"
-          :role="animalNotificationRole"
-          :aria-live="animalNotificationAriaLive"
+        <Transition
+          enter-active-class="notification-enter-active"
+          leave-active-class="notification-leave-active"
         >
-          {{ animalNotificationMessage }}
-        </div>
+          <div
+            v-if="animalNotificationMessage"
+            class="notification-banner"
+            :class="isAnimalNotificationError
+              ? 'notification-banner-error'
+              : 'notification-banner-success'"
+            :role="animalNotificationRole"
+            :aria-live="animalNotificationAriaLive"
+          >
+            <p class="font-medium">{{ animalNotificationMessage }}</p>
+          </div>
+        </Transition>
 
         <!-- Tab Navigation -->
         <div class="bg-white rounded-lg shadow-md mb-8">
