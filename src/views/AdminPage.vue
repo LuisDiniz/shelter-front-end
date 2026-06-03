@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useAnimalsStore } from '../stores/animals'
@@ -80,6 +80,7 @@ const animalFormSubmitted = ref(false)
 const animalTouchedFields = ref<Record<RequiredAnimalField, boolean>>(getEmptyAnimalTouchedFields())
 const invalidAnimalSubmitHint = 'Preencha os campos obrigatórios assinalados.'
 let animalSubmitHintTimeout: number | undefined
+let animalNotificationTimeout: number | undefined
 
 // Computed properties for form validation
 const animalFieldErrors = computed<Record<RequiredAnimalField, string>>(() => {
@@ -120,6 +121,29 @@ const clearAnimalSubmitHint = () => {
   }
 }
 
+const clearAnimalNotificationTimeout = () => {
+  if (animalNotificationTimeout) {
+    window.clearTimeout(animalNotificationTimeout)
+    animalNotificationTimeout = undefined
+  }
+}
+
+const dismissAnimalNotification = () => {
+  animalSaveError.value = ''
+  animalSuccessMessage.value = ''
+  clearAnimalNotificationTimeout()
+}
+
+watch(animalNotificationMessage, message => {
+  clearAnimalNotificationTimeout()
+
+  if (!message) return
+
+  animalNotificationTimeout = window.setTimeout(() => {
+    dismissAnimalNotification()
+  }, 5000)
+})
+
 // Authentication check
 onMounted(async () => {
   if (!authStore.isLoggedIn) {
@@ -134,6 +158,11 @@ onMounted(async () => {
   ])
 
   isLoading.value = false
+})
+
+onBeforeUnmount(() => {
+  clearAnimalSubmitHint()
+  clearAnimalNotificationTimeout()
 })
 
 // Tab switching
@@ -381,7 +410,7 @@ const handleLogout = () => {
       <div v-else>
         <div
           v-if="animalNotificationMessage"
-          class="fixed left-4 right-4 top-4 z-50 rounded-md border px-4 py-3 text-sm shadow-lg sm:left-auto sm:right-6 sm:max-w-md"
+          class="fixed left-1/2 top-24 z-40 w-[calc(100%-2rem)] -translate-x-1/2 rounded border px-4 py-3 md:w-4/5 lg:max-w-5xl"
           :class="isAnimalNotificationError
             ? 'border-error-500 bg-error-500/10 text-error-500'
             : 'border-success-500 bg-success-500/10 text-secondary-800'"
