@@ -4,18 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAnimalsStore } from '../stores/animals'
 import { useForm, Field } from 'vee-validate'
 import * as yup from 'yup'
-
-interface Animal {
-  id: string
-  name: string
-  type: 'dog' | 'cat'
-  gender: 'male' | 'female'
-  age: number
-  description: string
-  breed: string
-  imageUrl: string
-  images?: string[]
-}
+import type { Animal } from '../types/animal'
 
 const route = useRoute()
 const router = useRouter()

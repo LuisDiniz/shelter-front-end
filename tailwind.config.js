@@ -32,13 +32,19 @@ export default {
           900: '#1a1a1a',
         },
         success: {
+          50: '#f0fdf4',
+          100: '#dcfce7',
           500: '#10B981',
+          900: '#064e3b',
         },
         warning: {
           500: '#F59E0B',
         },
         error: {
+          50: '#fef2f2',
+          100: '#fee2e2',
           500: '#EF4444',
+          900: '#7f1d1d',
         },
       },
       fontFamily: {

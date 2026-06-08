@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/auth'
 
@@ -16,14 +16,9 @@ const navigateTo = (route: string) => {
   isMobileMenuOpen.value = false
 }
 
-const handleLogin = () => {
-  if (authStore.isLoggedIn) {
-    authStore.logout()
-    router.push('/')
-  } else {
-    router.push('/login')
-  }
-}
+const authLink = computed(() => authStore.isLoggedIn ? '/admin' : '/login')
+const authLinkLabel = computed(() => authStore.isLoggedIn ? 'Gestão do site' : 'Iniciar sessão')
+const mobileAuthLinkLabel = computed(() => authStore.isLoggedIn ? 'Gestão do site' : 'Iniciar sessão')
 </script>
 
 <template>
@@ -58,12 +53,12 @@ const handleLogin = () => {
           <router-link to="/noticias" class="text-secondary-800 hover:text-primary-500 font-medium transition-colors">
             Notícias
           </router-link>
-          <button 
-            @click="handleLogin"
+          <router-link
+            :to="authLink"
             class="btn btn-primary ml-4 text-sm"
           >
-            {{ authStore.isLoggedIn ? 'Sair' : 'Iniciar sessão' }}
-          </button>
+            {{ authLinkLabel }}
+          </router-link>
         </nav>
 
         <!-- Mobile Menu Button -->
@@ -120,10 +115,10 @@ const handleLogin = () => {
             Notícias
           </button>
           <button 
-            @click="handleLogin"
+            @click="navigateTo(authLink)"
             class="btn btn-primary w-full text-sm mt-4"
           >
-            {{ authStore.isLoggedIn ? 'Sair' : 'Entrar no sistema' }}
+            {{ mobileAuthLinkLabel }}
           </button>
         </div>
       </div>

@@ -6,10 +6,10 @@ import AnimalCard from '../components/animals/AnimalCard.vue'
 const animalsStore = useAnimalsStore()
 
 const searchQuery = ref('')
-const selectedAnimalType = ref('all')
+const selectedSpecies = ref('all')
 const selectedGender = ref('all')
 
-const animalTypes = ref([
+const speciesOptions = ref([
   { value: 'all', label: 'Todos' },
   { value: 'dog', label: 'Cães' },
   { value: 'cat', label: 'Gatos' }
@@ -28,7 +28,6 @@ onMounted(async () => {
 const filteredAnimals = computed(() => {
   let animals = animalsStore.animals
 
-  // Apply search filter
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
     animals = animals.filter(animal => 
@@ -37,12 +36,10 @@ const filteredAnimals = computed(() => {
     )
   }
 
-  // Apply animal type filter
-  if (selectedAnimalType.value !== 'all') {
-    animals = animals.filter(animal => animal.type === selectedAnimalType.value)
+  if (selectedSpecies.value !== 'all') {
+    animals = animals.filter(animal => animal.species === selectedSpecies.value)
   }
 
-  // Apply gender filter
   if (selectedGender.value !== 'all') {
     animals = animals.filter(animal => animal.gender === selectedGender.value)
   }
@@ -84,17 +81,17 @@ const filteredAnimals = computed(() => {
             </div>
           </div>
 
-          <!-- Animal Type Filter -->
+          <!-- Species Filter -->
           <div class="flex-1">
-            <label for="type" class="block text-sm font-medium text-secondary-700 mb-1">Tipo de Animal</label>
+            <label for="species" class="block text-sm font-medium text-secondary-700 mb-1">Espécie</label>
             <div class="relative">
               <select
-                id="type"
-                v-model="selectedAnimalType"
+                id="species"
+                v-model="selectedSpecies"
                 class="w-full py-2 px-4 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 appearance-none bg-white pr-10"
               >
-                <option v-for="type in animalTypes" :key="type.value" :value="type.value">
-                  {{ type.label }}
+                <option v-for="species in speciesOptions" :key="species.value" :value="species.value">
+                  {{ species.label }}
                 </option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -133,7 +130,7 @@ const filteredAnimals = computed(() => {
       <div v-else class="bg-white rounded-lg shadow-md p-8 text-center">
         <p class="text-secondary-600 mb-4">Nenhum animal encontrado.</p>
         <button 
-          @click="() => { searchQuery = ''; selectedAnimalType = 'all'; selectedGender = 'all'; }"
+          @click="() => { searchQuery = ''; selectedSpecies = 'all'; selectedGender = 'all'; }"
           class="btn btn-secondary"
         >
           Limpar filtros

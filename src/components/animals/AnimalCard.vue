@@ -2,12 +2,11 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const props = defineProps({
-  animal: {
-    type: Object,
-    required: true
-  }
-})
+import type { Animal } from '../../types/animal'
+
+const props = defineProps<{
+  animal: Animal
+}>()
 
 const router = useRouter()
 
@@ -15,8 +14,8 @@ const animalGender = computed(() => {
   return props.animal.gender === 'male' ? 'Macho' : 'Fêmea'
 })
 
-const animalType = computed(() => {
-  return props.animal.type === 'dog' ? 'Cão' : 'Gato'
+const animalSpecies = computed(() => {
+  return props.animal.species === 'dog' ? 'Cão' : 'Gato'
 })
 
 const viewDetails = () => {
@@ -33,7 +32,7 @@ const viewDetails = () => {
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
       <div class="absolute top-0 left-0 bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-br-lg">
-        {{ animalType }}
+        {{ animalSpecies }}
       </div>
     </div>
     <div class="p-4">

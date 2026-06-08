@@ -1,48 +1,85 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-// Types
-interface User {
+import { apiRequest } from '../services/api'
+import type { User } from '../types/auth'
+
+interface ApiUser {
   id: string
   username: string
   name: string
   role: string
+  is_staff: boolean
+  is_superuser: boolean
 }
 
-// Mock user data
-const mockUser: User = {
-  id: '1',
-  username: 'admin',
-  name: 'Administrador',
-  role: 'admin'
+interface AuthResponse {
+  token: string
+  user: ApiUser
+}
+
+const tokenStorageKey = 'shelter_auth_token'
+const userStorageKey = 'shelter_auth_user'
+
+const mapApiUser = (user: ApiUser): User => ({
+  id: user.id,
+  username: user.username,
+  name: user.name,
+  role: user.role,
+  isStaff: user.is_staff,
+  isSuperuser: user.is_superuser,
+})
+
+const readStoredUser = (): User | null => {
+  const storedUser = localStorage.getItem(userStorageKey)
+
+  if (!storedUser) return null
+
+  try {
+    return JSON.parse(storedUser) as User
+  } catch {
+    localStorage.removeItem(userStorageKey)
+    return null
+  }
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<User | null>(null)
-  const isLoggedIn = ref(false)
+  const token = ref<string | null>(localStorage.getItem(tokenStorageKey))
+  const user = ref<User | null>(readStoredUser())
+  const isLoggedIn = computed(() => Boolean(token.value && user.value))
 
-  // Login
   const login = async (username: string, password: string): Promise<boolean> => {
-    // In a real app, this would be an API call
-    // For demo purposes, we'll just check if username is 'admin' and password is 'admin123'
-    if (username === 'admin' && password === 'admin123') {
-      user.value = mockUser
-      isLoggedIn.value = true
+    try {
+      const response = await apiRequest<AuthResponse>('/api/auth/token/', {
+        method: 'POST',
+        body: { username, password },
+      })
+      const authenticatedUser = mapApiUser(response.user)
+
+      token.value = response.token
+      user.value = authenticatedUser
+      localStorage.setItem(tokenStorageKey, response.token)
+      localStorage.setItem(userStorageKey, JSON.stringify(authenticatedUser))
+
       return true
+    } catch {
+      logout()
+      return false
     }
-    return false
   }
 
-  // Logout
   const logout = () => {
     user.value = null
-    isLoggedIn.value = false
+    token.value = null
+    localStorage.removeItem(tokenStorageKey)
+    localStorage.removeItem(userStorageKey)
   }
 
   return {
+    token,
     user,
     isLoggedIn,
     login,
-    logout
+    logout,
   }
 })

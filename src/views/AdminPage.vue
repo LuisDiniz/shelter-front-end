@@ -1,9 +1,29 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useAnimalsStore } from '../stores/animals'
 import { useNewsStore } from '../stores/news'
+import type { Animal, AnimalPayload, Gender, Species } from '../types/animal'
+
+type AnimalImageSource = 'url' | 'upload'
+
+interface AnimalForm {
+  id: string
+  name: string
+  species: Species
+  gender: Gender
+  age: number
+  description: string
+  breed: string
+  imageUrl: string
+  imageSource: AnimalImageSource
+  imageFile: File | null
+  medicalHistory: string
+  vaccinations: string
+}
+
+type RequiredAnimalField = 'name' | 'breed' | 'age' | 'imageUrl' | 'description'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -13,16 +33,34 @@ const newsStore = useNewsStore()
 // Navigation
 const activeTab = ref('animals')
 
-// Animal form
-const animalForm = ref({
+const getEmptyAnimalForm = (): AnimalForm => ({
   id: '',
   name: '',
-  type: 'dog',
+  species: 'dog',
   gender: 'male',
   age: 1,
   description: '',
   breed: '',
-  imageUrl: ''
+  imageUrl: '',
+  imageSource: 'url',
+  imageFile: null,
+  medicalHistory: '',
+  vaccinations: ''
+})
+
+const getSpeciesLabel = (species: Species) => species === 'dog' ? 'Cão' : 'Gato'
+const getGenderLabel = (gender: Gender) => gender === 'male' ? 'Macho' : 'Fêmea'
+
+const animalForm = ref<AnimalForm>(getEmptyAnimalForm())
+const animalImageFileInput = ref<HTMLInputElement | null>(null)
+const animalUploadPreviewUrl = ref('')
+
+const getEmptyAnimalTouchedFields = (): Record<RequiredAnimalField, boolean> => ({
+  name: false,
+  breed: false,
+  age: false,
+  imageUrl: false,
+  description: false
 })
 
 // News form
@@ -42,16 +80,83 @@ const isEditingAnimal = ref(false)
 const isAddingNews = ref(false)
 const isEditingNews = ref(false)
 const isLoading = ref(true)
+const isSavingAnimal = ref(false)
+const animalSaveError = ref('')
+const animalSuccessMessage = ref('')
+const isAnimalSubmitHintVisible = ref(false)
+const animalFormSubmitted = ref(false)
+const animalTouchedFields = ref<Record<RequiredAnimalField, boolean>>(getEmptyAnimalTouchedFields())
+const invalidAnimalSubmitHint = 'Preencha os campos obrigatórios assinalados.'
+let animalSubmitHintTimeout: number | undefined
+let animalNotificationTimeout: number | undefined
 
 // Computed properties for form validation
-const isAnimalFormValid = computed(() => {
+const animalFieldErrors = computed<Record<RequiredAnimalField, string>>(() => {
   const form = animalForm.value
-  return form.name && form.description && form.imageUrl && form.breed
+  const age = Number(form.age)
+
+  return {
+    name: form.name.trim() ? '' : 'Nome é obrigatório.',
+    breed: form.breed.trim() ? '' : 'Raça é obrigatória.',
+    age: Number.isFinite(age) && age >= 0 ? '' : 'Idade deve ser igual ou superior a 0.',
+    imageUrl: form.imageSource === 'upload'
+      ? form.imageFile ? '' : 'Selecione uma imagem para carregar.'
+      : form.imageUrl.trim() ? '' : 'URL da imagem é obrigatória.',
+    description: form.description.trim() ? '' : 'Descrição é obrigatória.'
+  }
 })
+
+const isAnimalFormValid = computed(() => {
+  return Object.values(animalFieldErrors.value).every(error => !error)
+})
+
+const isAnimalSubmitDisabled = computed(() => !isAnimalFormValid.value || isSavingAnimal.value)
+
+const animalNotificationMessage = computed(() => animalSaveError.value || animalSuccessMessage.value)
+const isAnimalNotificationError = computed(() => Boolean(animalSaveError.value))
+const animalNotificationRole = computed(() => isAnimalNotificationError.value ? 'alert' : 'status')
+const animalNotificationAriaLive = computed(() => isAnimalNotificationError.value ? 'assertive' : 'polite')
+const selectedAnimalImageFileName = computed(() => animalForm.value.imageFile?.name || '')
+const animalUploadPreviewAlt = computed(() => animalForm.value.name.trim()
+  ? `Pré-visualização de ${animalForm.value.name}`
+  : 'Pré-visualização da imagem selecionada'
+)
 
 const isNewsFormValid = computed(() => {
   const form = newsForm.value
   return form.title && form.excerpt && form.content && form.imageUrl
+})
+
+const clearAnimalSubmitHint = () => {
+  isAnimalSubmitHintVisible.value = false
+
+  if (animalSubmitHintTimeout) {
+    window.clearTimeout(animalSubmitHintTimeout)
+    animalSubmitHintTimeout = undefined
+  }
+}
+
+const clearAnimalNotificationTimeout = () => {
+  if (animalNotificationTimeout) {
+    window.clearTimeout(animalNotificationTimeout)
+    animalNotificationTimeout = undefined
+  }
+}
+
+const dismissAnimalNotification = () => {
+  animalSaveError.value = ''
+  animalSuccessMessage.value = ''
+  clearAnimalNotificationTimeout()
+}
+
+watch(animalNotificationMessage, message => {
+  clearAnimalNotificationTimeout()
+
+  if (!message) return
+
+  animalNotificationTimeout = window.setTimeout(() => {
+    dismissAnimalNotification()
+  }, 5000)
 })
 
 // Authentication check
@@ -70,6 +175,12 @@ onMounted(async () => {
   isLoading.value = false
 })
 
+onBeforeUnmount(() => {
+  clearAnimalSubmitHint()
+  clearAnimalNotificationTimeout()
+  clearAnimalImagePreview()
+})
+
 // Tab switching
 const setActiveTab = (tab: string) => {
   activeTab.value = tab
@@ -77,17 +188,54 @@ const setActiveTab = (tab: string) => {
 }
 
 // Form management
-const resetForms = () => {
-  animalForm.value = {
-    id: '',
-    name: '',
-    type: 'dog',
-    gender: 'male',
-    age: 1,
-    description: '',
-    breed: '',
-    imageUrl: ''
+const clearAnimalImagePreview = () => {
+  if (!animalUploadPreviewUrl.value) return
+
+  window.URL.revokeObjectURL(animalUploadPreviewUrl.value)
+  animalUploadPreviewUrl.value = ''
+}
+
+const clearAnimalUploadSelection = () => {
+  clearAnimalImagePreview()
+  animalForm.value.imageFile = null
+
+  if (animalImageFileInput.value) {
+    animalImageFileInput.value.value = ''
   }
+}
+
+const setAnimalImageSource = (source: AnimalImageSource) => {
+  animalForm.value.imageSource = source
+
+  if (source === 'url') {
+    clearAnimalUploadSelection()
+  }
+
+  clearAnimalSubmitHint()
+}
+
+const handleAnimalImageFileChange = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0] || null
+
+  clearAnimalImagePreview()
+  animalForm.value.imageFile = file
+
+  if (file) {
+    animalUploadPreviewUrl.value = window.URL.createObjectURL(file)
+  }
+
+  markAnimalFieldTouched('imageUrl')
+}
+
+const resetForms = () => {
+  clearAnimalUploadSelection()
+  animalForm.value = getEmptyAnimalForm()
+  animalSaveError.value = ''
+  animalSuccessMessage.value = ''
+  clearAnimalSubmitHint()
+  animalFormSubmitted.value = false
+  animalTouchedFields.value = getEmptyAnimalTouchedFields()
   
   newsForm.value = {
     id: '',
@@ -111,34 +259,136 @@ const startAddAnimal = () => {
   isAddingAnimal.value = true
 }
 
-const startEditAnimal = (animal: typeof animalsStore.animals[0]) => {
-  animalForm.value = { ...animal }
+const startEditAnimal = (animal: Animal) => {
+  animalSaveError.value = ''
+  animalSuccessMessage.value = ''
+  clearAnimalSubmitHint()
+  animalFormSubmitted.value = false
+  animalTouchedFields.value = getEmptyAnimalTouchedFields()
+  animalForm.value = {
+    id: animal.id,
+    name: animal.name,
+    species: animal.species,
+    gender: animal.gender,
+    age: animal.age,
+    description: animal.description,
+    breed: animal.breed,
+    imageUrl: animal.imageUrl,
+    imageSource: 'url',
+    imageFile: null,
+    medicalHistory: animal.medicalHistory,
+    vaccinations: animal.vaccinations
+  }
   isEditingAnimal.value = true
   isAddingAnimal.value = false
 }
 
+const markAnimalFieldTouched = (field: RequiredAnimalField) => {
+  animalTouchedFields.value[field] = true
+  clearAnimalSubmitHint()
+}
+
+const shouldShowAnimalFieldError = (field: RequiredAnimalField) => {
+  return Boolean((animalFormSubmitted.value || animalTouchedFields.value[field]) && animalFieldErrors.value[field])
+}
+
+const getAnimalFieldClass = (field: RequiredAnimalField) => ({
+  'border-error-500 focus:ring-error-500': shouldShowAnimalFieldError(field),
+  'border-success-500 focus:ring-success-500': (animalFormSubmitted.value || animalTouchedFields.value[field]) && !animalFieldErrors.value[field]
+})
+
+const markAllAnimalFieldsTouched = () => {
+  animalTouchedFields.value = {
+    name: true,
+    breed: true,
+    age: true,
+    imageUrl: true,
+    description: true
+  }
+}
+
+const showInvalidAnimalFormHint = () => {
+  animalFormSubmitted.value = true
+  markAllAnimalFieldsTouched()
+  clearAnimalSubmitHint()
+  isAnimalSubmitHintVisible.value = true
+
+  animalSubmitHintTimeout = window.setTimeout(() => {
+    isAnimalSubmitHintVisible.value = false
+    animalSubmitHintTimeout = undefined
+  }, 3000)
+}
+
+const handleAnimalSubmitClick = () => {
+  if (!isAnimalFormValid.value && !isSavingAnimal.value) {
+    showInvalidAnimalFormHint()
+  }
+}
+
 const saveAnimal = async () => {
-  if (!isAnimalFormValid.value) return
+  if (isSavingAnimal.value) return
 
-  const animalData = {
-    ...animalForm.value,
-    type: animalForm.value.type as 'dog' | 'cat',
-    gender: animalForm.value.gender as 'male' | 'female'
+  animalFormSubmitted.value = true
+  markAllAnimalFieldsTouched()
+  animalSaveError.value = ''
+  animalSuccessMessage.value = ''
+
+  if (!isAnimalFormValid.value) {
+    showInvalidAnimalFormHint()
+    return
   }
 
-  if (isAddingAnimal.value) {
-    const { id, ...animalWithoutId } = animalData
-    await animalsStore.addAnimal(animalWithoutId)
-  } else if (isEditingAnimal.value) {
-    await animalsStore.updateAnimal(animalForm.value.id, animalData)
+  clearAnimalSubmitHint()
+
+  const animalData: AnimalPayload = {
+    name: animalForm.value.name,
+    species: animalForm.value.species,
+    gender: animalForm.value.gender,
+    age: animalForm.value.age,
+    description: animalForm.value.description,
+    breed: animalForm.value.breed,
+    imageUrl: animalForm.value.imageUrl,
+    imageFile: animalForm.value.imageSource === 'upload' ? animalForm.value.imageFile : null,
+    medicalHistory: animalForm.value.medicalHistory,
+    vaccinations: animalForm.value.vaccinations
   }
 
-  resetForms()
+  isSavingAnimal.value = true
+  animalSaveError.value = ''
+
+  try {
+    const successMessage = isAddingAnimal.value
+      ? 'Animal adicionado com sucesso.'
+      : 'Animal atualizado com sucesso.'
+
+    if (isAddingAnimal.value) {
+      await animalsStore.createAnimal(animalData)
+    } else if (isEditingAnimal.value) {
+      await animalsStore.updateAnimal(animalForm.value.id, animalData)
+    }
+
+    resetForms()
+    animalSuccessMessage.value = successMessage
+  } catch (error) {
+    console.error('Error saving animal:', error)
+    animalSaveError.value = 'Não foi possível guardar o animal. Verifique os dados e tente novamente.'
+  } finally {
+    isSavingAnimal.value = false
+  }
 }
 
 const deleteAnimal = async (id: string) => {
   if (confirm('Tem certeza que deseja excluir este animal?')) {
-    await animalsStore.deleteAnimal(id)
+    animalSaveError.value = ''
+    animalSuccessMessage.value = ''
+
+    try {
+      await animalsStore.deleteAnimal(id)
+      animalSuccessMessage.value = 'Animal eliminado com sucesso.'
+    } catch (error) {
+      console.error('Error deleting animal:', error)
+      animalSaveError.value = 'Não foi possível eliminar o animal. Tente novamente.'
+    }
   }
 }
 
@@ -218,6 +468,23 @@ const handleLogout = () => {
       </div>
 
       <div v-else>
+        <Transition
+          enter-active-class="notification-enter-active"
+          leave-active-class="notification-leave-active"
+        >
+          <div
+            v-if="animalNotificationMessage"
+            class="notification-banner"
+            :class="isAnimalNotificationError
+              ? 'notification-banner-error'
+              : 'notification-banner-success'"
+            :role="animalNotificationRole"
+            :aria-live="animalNotificationAriaLive"
+          >
+            <p class="font-medium">{{ animalNotificationMessage }}</p>
+          </div>
+        </Transition>
+
         <!-- Tab Navigation -->
         <div class="bg-white rounded-lg shadow-md mb-8">
           <div class="flex border-b">
@@ -246,38 +513,58 @@ const handleLogout = () => {
               {{ isAddingAnimal ? 'Adicionar Novo Animal' : 'Editar Animal' }}
             </h2>
             
-            <form @submit.prevent="saveAnimal" class="space-y-6">
+            <form @submit.prevent="saveAnimal" class="space-y-6" novalidate>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Name -->
                 <div>
-                  <label for="name" class="block text-sm font-medium text-secondary-700 mb-1">Nome</label>
+                  <label for="name" class="block text-sm font-medium text-secondary-700 mb-1">
+                    Nome <span class="text-error-500">*</span>
+                  </label>
                   <input 
                     id="name"
                     v-model="animalForm.name"
                     type="text"
                     class="input-field"
+                    :class="getAnimalFieldClass('name')"
+                    :aria-invalid="shouldShowAnimalFieldError('name')"
+                    aria-describedby="animal-name-error"
+                    @blur="markAnimalFieldTouched('name')"
                     required
                   />
+                  <p v-if="shouldShowAnimalFieldError('name')" id="animal-name-error" class="mt-1 text-sm text-error-500">
+                    {{ animalFieldErrors.name }}
+                  </p>
                 </div>
 
                 <!-- Breed -->
                 <div>
-                  <label for="breed" class="block text-sm font-medium text-secondary-700 mb-1">Raça</label>
+                  <label for="breed" class="block text-sm font-medium text-secondary-700 mb-1">
+                    Raça <span class="text-error-500">*</span>
+                  </label>
                   <input 
                     id="breed"
                     v-model="animalForm.breed"
                     type="text"
                     class="input-field"
+                    :class="getAnimalFieldClass('breed')"
+                    :aria-invalid="shouldShowAnimalFieldError('breed')"
+                    aria-describedby="animal-breed-error"
+                    @blur="markAnimalFieldTouched('breed')"
                     required
                   />
+                  <p v-if="shouldShowAnimalFieldError('breed')" id="animal-breed-error" class="mt-1 text-sm text-error-500">
+                    {{ animalFieldErrors.breed }}
+                  </p>
                 </div>
 
-                <!-- Type -->
+                <!-- Species -->
                 <div>
-                  <label for="type" class="block text-sm font-medium text-secondary-700 mb-1">Tipo</label>
+                  <label for="species" class="block text-sm font-medium text-secondary-700 mb-1">
+                    Espécie <span class="text-error-500">*</span>
+                  </label>
                   <select 
-                    id="type"
-                    v-model="animalForm.type"
+                    id="species"
+                    v-model="animalForm.species"
                     class="input-field"
                     required
                   >
@@ -288,7 +575,9 @@ const handleLogout = () => {
 
                 <!-- Gender -->
                 <div>
-                  <label for="gender" class="block text-sm font-medium text-secondary-700 mb-1">Sexo</label>
+                  <label for="gender" class="block text-sm font-medium text-secondary-700 mb-1">
+                    Sexo <span class="text-error-500">*</span>
+                  </label>
                   <select 
                     id="gender"
                     v-model="animalForm.gender"
@@ -302,7 +591,9 @@ const handleLogout = () => {
 
                 <!-- Age -->
                 <div>
-                  <label for="age" class="block text-sm font-medium text-secondary-700 mb-1">Idade (anos)</label>
+                  <label for="age" class="block text-sm font-medium text-secondary-700 mb-1">
+                    Idade (anos) <span class="text-error-500">*</span>
+                  </label>
                   <input 
                     id="age"
                     v-model.number="animalForm.age"
@@ -310,37 +601,151 @@ const handleLogout = () => {
                     min="0"
                     max="30"
                     class="input-field"
+                    :class="getAnimalFieldClass('age')"
+                    :aria-invalid="shouldShowAnimalFieldError('age')"
+                    aria-describedby="animal-age-error"
+                    @blur="markAnimalFieldTouched('age')"
                     required
                   />
+                  <p v-if="shouldShowAnimalFieldError('age')" id="animal-age-error" class="mt-1 text-sm text-error-500">
+                    {{ animalFieldErrors.age }}
+                  </p>
                 </div>
 
-                <!-- Image URL -->
+                <!-- Image -->
                 <div>
-                  <label for="imageUrl" class="block text-sm font-medium text-secondary-700 mb-1">URL da Imagem</label>
-                  <input 
-                    id="imageUrl"
-                    v-model="animalForm.imageUrl"
-                    type="url"
-                    class="input-field"
-                    placeholder="https://..."
-                    required
-                  />
+                  <label class="block text-sm font-medium text-secondary-700 mb-1">
+                    Imagem <span class="text-error-500">*</span>
+                  </label>
+                  <div
+                    class="mb-3 inline-flex rounded-md border border-gray-200 bg-gray-50 p-1"
+                    role="group"
+                    aria-label="Origem da imagem"
+                  >
+                    <button
+                      type="button"
+                      class="rounded px-3 py-1.5 text-sm font-medium transition-colors"
+                      :class="animalForm.imageSource === 'url'
+                        ? 'bg-white text-primary-700 shadow-sm'
+                        : 'text-secondary-600 hover:text-secondary-800'"
+                      @click="setAnimalImageSource('url')"
+                    >
+                      URL
+                    </button>
+                    <button
+                      type="button"
+                      class="rounded px-3 py-1.5 text-sm font-medium transition-colors"
+                      :class="animalForm.imageSource === 'upload'
+                        ? 'bg-white text-primary-700 shadow-sm'
+                        : 'text-secondary-600 hover:text-secondary-800'"
+                      @click="setAnimalImageSource('upload')"
+                    >
+                      Carregar imagem
+                    </button>
+                  </div>
+
+                  <div v-if="animalForm.imageSource === 'url'">
+                    <label for="imageUrl" class="sr-only">URL da imagem</label>
+                    <input
+                      id="imageUrl"
+                      v-model="animalForm.imageUrl"
+                      type="url"
+                      class="input-field"
+                      :class="getAnimalFieldClass('imageUrl')"
+                      placeholder="https://..."
+                      :aria-invalid="shouldShowAnimalFieldError('imageUrl')"
+                      aria-describedby="animal-image-url-error"
+                      @blur="markAnimalFieldTouched('imageUrl')"
+                      required
+                    />
+                  </div>
+
+                  <div v-else>
+                    <label for="animalImageFile" class="sr-only">Carregar imagem</label>
+                    <input
+                      id="animalImageFile"
+                      ref="animalImageFileInput"
+                      type="file"
+                      accept="image/*"
+                      class="input-field file:mr-4 file:rounded-md file:border-0 file:bg-primary-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-700 hover:file:bg-primary-100"
+                      :class="getAnimalFieldClass('imageUrl')"
+                      :aria-invalid="shouldShowAnimalFieldError('imageUrl')"
+                      aria-describedby="animal-image-url-error"
+                      @change="handleAnimalImageFileChange"
+                      @blur="markAnimalFieldTouched('imageUrl')"
+                    />
+                    <div
+                      v-if="selectedAnimalImageFileName"
+                      class="mt-2 flex items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                    >
+                      <span class="truncate text-secondary-700">{{ selectedAnimalImageFileName }}</span>
+                      <button
+                        type="button"
+                        class="shrink-0 font-medium text-primary-600 hover:text-primary-800"
+                        @click="clearAnimalUploadSelection"
+                      >
+                        Remover
+                      </button>
+                    </div>
+                    <img
+                      v-if="animalUploadPreviewUrl"
+                      :src="animalUploadPreviewUrl"
+                      :alt="animalUploadPreviewAlt"
+                      class="mt-3 h-32 w-full rounded-md object-cover"
+                    />
+                  </div>
+
+                  <p v-if="shouldShowAnimalFieldError('imageUrl')" id="animal-image-url-error" class="mt-1 text-sm text-error-500">
+                    {{ animalFieldErrors.imageUrl }}
+                  </p>
                 </div>
 
                 <!-- Description (full width) -->
                 <div class="md:col-span-2">
-                  <label for="description" class="block text-sm font-medium text-secondary-700 mb-1">Descrição</label>
+                  <label for="description" class="block text-sm font-medium text-secondary-700 mb-1">
+                    Descrição <span class="text-error-500">*</span>
+                  </label>
                   <textarea 
                     id="description"
                     v-model="animalForm.description"
                     rows="4"
                     class="input-field"
+                    :class="getAnimalFieldClass('description')"
+                    :aria-invalid="shouldShowAnimalFieldError('description')"
+                    aria-describedby="animal-description-error"
+                    @blur="markAnimalFieldTouched('description')"
                     required
+                  ></textarea>
+                  <p v-if="shouldShowAnimalFieldError('description')" id="animal-description-error" class="mt-1 text-sm text-error-500">
+                    {{ animalFieldErrors.description }}
+                  </p>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="medicalHistory" class="block text-sm font-medium text-secondary-700 mb-1">Histórico Médico</label>
+                  <textarea
+                    id="medicalHistory"
+                    v-model="animalForm.medicalHistory"
+                    rows="3"
+                    class="input-field"
+                  ></textarea>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="vaccinations" class="block text-sm font-medium text-secondary-700 mb-1">Vacinas</label>
+                  <textarea
+                    id="vaccinations"
+                    v-model="animalForm.vaccinations"
+                    rows="3"
+                    class="input-field"
                   ></textarea>
                 </div>
               </div>
 
-              <div class="flex justify-end space-x-4">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-end">
+                <p v-if="animalSaveError" class="mr-auto text-sm text-error-600">
+                  {{ animalSaveError }}
+                </p>
                 <button 
                   type="button"
                   @click="resetForms"
@@ -348,13 +753,39 @@ const handleLogout = () => {
                 >
                   Cancelar
                 </button>
-                <button 
-                  type="submit"
-                  class="btn btn-primary"
-                  :disabled="!isAnimalFormValid"
-                >
-                  {{ isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
-                </button>
+                <div class="flex items-start">
+                  <span
+                    class="group relative inline-flex"
+                    :class="{ 'cursor-not-allowed': !isAnimalFormValid }"
+                    @click="handleAnimalSubmitClick"
+                    @mouseleave="clearAnimalSubmitHint"
+                  >
+                    <button 
+                      type="submit"
+                      class="btn"
+                      :class="[
+                        !isAnimalFormValid
+                          ? 'cursor-not-allowed bg-gray-300 text-secondary-500 hover:bg-gray-300 pointer-events-none'
+                          : isSavingAnimal
+                            ? 'cursor-wait bg-primary-300 text-white hover:bg-primary-300 pointer-events-none'
+                            : 'btn-primary'
+                      ]"
+                      :disabled="isAnimalSubmitDisabled"
+                      :aria-describedby="!isAnimalFormValid ? 'animal-submit-hint' : undefined"
+                    >
+                      {{ isSavingAnimal ? 'A guardar...' : isAddingAnimal ? 'Adicionar Animal' : 'Salvar Alterações' }}
+                    </button>
+                    <span
+                      v-if="!isAnimalFormValid"
+                      id="animal-submit-hint"
+                      role="tooltip"
+                      class="pointer-events-none absolute bottom-full right-0 z-20 mb-2 w-max max-w-[16rem] rounded-md bg-secondary-800 px-3 py-2 text-xs font-medium leading-snug text-white shadow-lg transition-opacity duration-150 group-hover:opacity-100"
+                      :class="isAnimalSubmitHintVisible ? 'opacity-100' : 'opacity-0'"
+                    >
+                      {{ invalidAnimalSubmitHint }}
+                    </span>
+                  </span>
+                </div>
               </div>
             </form>
           </div>
@@ -379,7 +810,7 @@ const handleLogout = () => {
                       Nome
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
-                      Tipo
+                      Espécie
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
                       Raça
@@ -405,15 +836,15 @@ const handleLogout = () => {
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
-                        :class="animal.type === 'dog' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'">
-                        {{ animal.type === 'dog' ? 'Cão' : 'Gato' }}
+                        :class="animal.species === 'dog' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'">
+                        {{ getSpeciesLabel(animal.species) }}
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-600">
                       {{ animal.breed }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-600">
-                      {{ animal.gender === 'male' ? 'Macho' : 'Fêmea' }}
+                      {{ getGenderLabel(animal.gender) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-secondary-600">
                       {{ animal.age }} {{ animal.age === 1 ? 'ano' : 'anos' }}

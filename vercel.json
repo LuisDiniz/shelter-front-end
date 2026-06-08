@@ -1,4 +1,14 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/animals/:path*",
+      "destination": "https://shelter-back-end.vercel.app/api/animals/:path*"
+    },
+    {
+      "source": "/api/auth/:path*",
+      "destination": "https://shelter-back-end.vercel.app/api/auth/:path*"
+    }
+  ],
   "routes": [
     {
       "source": "/((?!api/)(?!.*\\.).*)",
