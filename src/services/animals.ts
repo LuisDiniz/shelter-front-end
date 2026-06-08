@@ -76,7 +76,7 @@ const buildAnimalRequestBody = (animal: Partial<AnimalPayload>): Partial<ApiAnim
 }
 
 export const fetchAnimals = async (): Promise<Animal[]> => {
-  const animals = await apiRequest<ApiAnimal[]>('/api/animals/')
+  const animals = await apiRequest<ApiAnimal[]>('/api/animals')
   return animals.map(mapApiAnimal)
 }
 
@@ -86,7 +86,7 @@ export const fetchAnimal = async (id: string): Promise<Animal> => {
 }
 
 export const createAnimal = async (animal: AnimalPayload, token: string): Promise<Animal> => {
-  const createdAnimal = await apiRequest<ApiAnimal>('/api/animals/', {
+  const createdAnimal = await apiRequest<ApiAnimal>('/api/animals', {
     method: 'POST',
     body: buildAnimalRequestBody(animal),
     token,

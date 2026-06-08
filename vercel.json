@@ -5,10 +5,6 @@
       "destination": "https://shelter-back-end.vercel.app/api/animals/:path*"
     },
     {
-      "source": "/api/animals",
-      "destination": "https://shelter-back-end.vercel.app/api/animals"
-    },    
-    {
       "source": "/api/auth/:path*",
       "destination": "https://shelter-back-end.vercel.app/api/auth/:path*"
     }
