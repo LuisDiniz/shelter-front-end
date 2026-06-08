@@ -1,4 +1,5 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '')
+const defaultApiBaseUrl = import.meta.env.DEV ? 'http://localhost:8000' : ''
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || defaultApiBaseUrl).replace(/\/$/, '')
 
 interface ApiRequestOptions extends Omit<RequestInit, 'body'> {
   body?: unknown
