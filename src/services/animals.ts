@@ -59,6 +59,22 @@ const mapAnimalPayload = (animal: Partial<AnimalPayload>): Partial<ApiAnimalPayl
   return payload
 }
 
+const buildAnimalRequestBody = (animal: Partial<AnimalPayload>): Partial<ApiAnimalPayload> | FormData => {
+  if (!animal.imageFile) {
+    return mapAnimalPayload(animal)
+  }
+
+  const payload = mapAnimalPayload(animal)
+  const formData = new FormData()
+
+  Object.entries(payload).forEach(([key, value]) => {
+    if (value !== undefined) formData.append(key, String(value))
+  })
+  formData.append('image_file', animal.imageFile)
+
+  return formData
+}
+
 export const fetchAnimals = async (): Promise<Animal[]> => {
   const animals = await apiRequest<ApiAnimal[]>('/api/animals/')
   return animals.map(mapApiAnimal)
@@ -72,7 +88,7 @@ export const fetchAnimal = async (id: string): Promise<Animal> => {
 export const createAnimal = async (animal: AnimalPayload, token: string): Promise<Animal> => {
   const createdAnimal = await apiRequest<ApiAnimal>('/api/animals/', {
     method: 'POST',
-    body: mapAnimalPayload(animal),
+    body: buildAnimalRequestBody(animal),
     token,
   })
 
@@ -86,7 +102,7 @@ export const updateAnimal = async (
 ): Promise<Animal> => {
   const updatedAnimal = await apiRequest<ApiAnimal>(`/api/animals/${id}/`, {
     method: 'PATCH',
-    body: mapAnimalPayload(animal),
+    body: buildAnimalRequestBody(animal),
     token,
   })
 

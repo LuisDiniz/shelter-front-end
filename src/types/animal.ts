@@ -15,4 +15,15 @@ export interface Animal {
   admissionDate: string
 }
 
-export type AnimalPayload = Omit<Animal, 'id' | 'admissionDate'>
+export interface AnimalPayload {
+  name: string
+  species: Species
+  gender: Gender
+  age: number
+  description: string
+  breed: string
+  imageUrl: string
+  imageFile?: File | null
+  medicalHistory: string
+  vaccinations: string
+}

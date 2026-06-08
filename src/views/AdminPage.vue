@@ -6,6 +6,8 @@ import { useAnimalsStore } from '../stores/animals'
 import { useNewsStore } from '../stores/news'
 import type { Animal, AnimalPayload, Gender, Species } from '../types/animal'
 
+type AnimalImageSource = 'url' | 'upload'
+
 interface AnimalForm {
   id: string
   name: string
@@ -15,6 +17,8 @@ interface AnimalForm {
   description: string
   breed: string
   imageUrl: string
+  imageSource: AnimalImageSource
+  imageFile: File | null
   medicalHistory: string
   vaccinations: string
 }
@@ -38,6 +42,8 @@ const getEmptyAnimalForm = (): AnimalForm => ({
   description: '',
   breed: '',
   imageUrl: '',
+  imageSource: 'url',
+  imageFile: null,
   medicalHistory: '',
   vaccinations: ''
 })
@@ -46,6 +52,8 @@ const getSpeciesLabel = (species: Species) => species === 'dog' ? 'Cão' : 'Gato
 const getGenderLabel = (gender: Gender) => gender === 'male' ? 'Macho' : 'Fêmea'
 
 const animalForm = ref<AnimalForm>(getEmptyAnimalForm())
+const animalImageFileInput = ref<HTMLInputElement | null>(null)
+const animalUploadPreviewUrl = ref('')
 
 const getEmptyAnimalTouchedFields = (): Record<RequiredAnimalField, boolean> => ({
   name: false,
@@ -91,7 +99,9 @@ const animalFieldErrors = computed<Record<RequiredAnimalField, string>>(() => {
     name: form.name.trim() ? '' : 'Nome é obrigatório.',
     breed: form.breed.trim() ? '' : 'Raça é obrigatória.',
     age: Number.isFinite(age) && age >= 0 ? '' : 'Idade deve ser igual ou superior a 0.',
-    imageUrl: form.imageUrl.trim() ? '' : 'URL da imagem é obrigatória.',
+    imageUrl: form.imageSource === 'upload'
+      ? form.imageFile ? '' : 'Selecione uma imagem para carregar.'
+      : form.imageUrl.trim() ? '' : 'URL da imagem é obrigatória.',
     description: form.description.trim() ? '' : 'Descrição é obrigatória.'
   }
 })
@@ -106,6 +116,11 @@ const animalNotificationMessage = computed(() => animalSaveError.value || animal
 const isAnimalNotificationError = computed(() => Boolean(animalSaveError.value))
 const animalNotificationRole = computed(() => isAnimalNotificationError.value ? 'alert' : 'status')
 const animalNotificationAriaLive = computed(() => isAnimalNotificationError.value ? 'assertive' : 'polite')
+const selectedAnimalImageFileName = computed(() => animalForm.value.imageFile?.name || '')
+const animalUploadPreviewAlt = computed(() => animalForm.value.name.trim()
+  ? `Pré-visualização de ${animalForm.value.name}`
+  : 'Pré-visualização da imagem selecionada'
+)
 
 const isNewsFormValid = computed(() => {
   const form = newsForm.value
@@ -163,6 +178,7 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   clearAnimalSubmitHint()
   clearAnimalNotificationTimeout()
+  clearAnimalImagePreview()
 })
 
 // Tab switching
@@ -172,7 +188,48 @@ const setActiveTab = (tab: string) => {
 }
 
 // Form management
+const clearAnimalImagePreview = () => {
+  if (!animalUploadPreviewUrl.value) return
+
+  window.URL.revokeObjectURL(animalUploadPreviewUrl.value)
+  animalUploadPreviewUrl.value = ''
+}
+
+const clearAnimalUploadSelection = () => {
+  clearAnimalImagePreview()
+  animalForm.value.imageFile = null
+
+  if (animalImageFileInput.value) {
+    animalImageFileInput.value.value = ''
+  }
+}
+
+const setAnimalImageSource = (source: AnimalImageSource) => {
+  animalForm.value.imageSource = source
+
+  if (source === 'url') {
+    clearAnimalUploadSelection()
+  }
+
+  clearAnimalSubmitHint()
+}
+
+const handleAnimalImageFileChange = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0] || null
+
+  clearAnimalImagePreview()
+  animalForm.value.imageFile = file
+
+  if (file) {
+    animalUploadPreviewUrl.value = window.URL.createObjectURL(file)
+  }
+
+  markAnimalFieldTouched('imageUrl')
+}
+
 const resetForms = () => {
+  clearAnimalUploadSelection()
   animalForm.value = getEmptyAnimalForm()
   animalSaveError.value = ''
   animalSuccessMessage.value = ''
@@ -217,6 +274,8 @@ const startEditAnimal = (animal: Animal) => {
     description: animal.description,
     breed: animal.breed,
     imageUrl: animal.imageUrl,
+    imageSource: 'url',
+    imageFile: null,
     medicalHistory: animal.medicalHistory,
     vaccinations: animal.vaccinations
   }
@@ -289,6 +348,7 @@ const saveAnimal = async () => {
     description: animalForm.value.description,
     breed: animalForm.value.breed,
     imageUrl: animalForm.value.imageUrl,
+    imageFile: animalForm.value.imageSource === 'upload' ? animalForm.value.imageFile : null,
     medicalHistory: animalForm.value.medicalHistory,
     vaccinations: animalForm.value.vaccinations
   }
@@ -552,23 +612,89 @@ const handleLogout = () => {
                   </p>
                 </div>
 
-                <!-- Image URL -->
+                <!-- Image -->
                 <div>
-                  <label for="imageUrl" class="block text-sm font-medium text-secondary-700 mb-1">
-                    URL da Imagem <span class="text-error-500">*</span>
+                  <label class="block text-sm font-medium text-secondary-700 mb-1">
+                    Imagem <span class="text-error-500">*</span>
                   </label>
-                  <input 
-                    id="imageUrl"
-                    v-model="animalForm.imageUrl"
-                    type="url"
-                    class="input-field"
-                    :class="getAnimalFieldClass('imageUrl')"
-                    placeholder="https://..."
-                    :aria-invalid="shouldShowAnimalFieldError('imageUrl')"
-                    aria-describedby="animal-image-url-error"
-                    @blur="markAnimalFieldTouched('imageUrl')"
-                    required
-                  />
+                  <div
+                    class="mb-3 inline-flex rounded-md border border-gray-200 bg-gray-50 p-1"
+                    role="group"
+                    aria-label="Origem da imagem"
+                  >
+                    <button
+                      type="button"
+                      class="rounded px-3 py-1.5 text-sm font-medium transition-colors"
+                      :class="animalForm.imageSource === 'url'
+                        ? 'bg-white text-primary-700 shadow-sm'
+                        : 'text-secondary-600 hover:text-secondary-800'"
+                      @click="setAnimalImageSource('url')"
+                    >
+                      URL
+                    </button>
+                    <button
+                      type="button"
+                      class="rounded px-3 py-1.5 text-sm font-medium transition-colors"
+                      :class="animalForm.imageSource === 'upload'
+                        ? 'bg-white text-primary-700 shadow-sm'
+                        : 'text-secondary-600 hover:text-secondary-800'"
+                      @click="setAnimalImageSource('upload')"
+                    >
+                      Carregar imagem
+                    </button>
+                  </div>
+
+                  <div v-if="animalForm.imageSource === 'url'">
+                    <label for="imageUrl" class="sr-only">URL da imagem</label>
+                    <input
+                      id="imageUrl"
+                      v-model="animalForm.imageUrl"
+                      type="url"
+                      class="input-field"
+                      :class="getAnimalFieldClass('imageUrl')"
+                      placeholder="https://..."
+                      :aria-invalid="shouldShowAnimalFieldError('imageUrl')"
+                      aria-describedby="animal-image-url-error"
+                      @blur="markAnimalFieldTouched('imageUrl')"
+                      required
+                    />
+                  </div>
+
+                  <div v-else>
+                    <label for="animalImageFile" class="sr-only">Carregar imagem</label>
+                    <input
+                      id="animalImageFile"
+                      ref="animalImageFileInput"
+                      type="file"
+                      accept="image/*"
+                      class="input-field file:mr-4 file:rounded-md file:border-0 file:bg-primary-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-700 hover:file:bg-primary-100"
+                      :class="getAnimalFieldClass('imageUrl')"
+                      :aria-invalid="shouldShowAnimalFieldError('imageUrl')"
+                      aria-describedby="animal-image-url-error"
+                      @change="handleAnimalImageFileChange"
+                      @blur="markAnimalFieldTouched('imageUrl')"
+                    />
+                    <div
+                      v-if="selectedAnimalImageFileName"
+                      class="mt-2 flex items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                    >
+                      <span class="truncate text-secondary-700">{{ selectedAnimalImageFileName }}</span>
+                      <button
+                        type="button"
+                        class="shrink-0 font-medium text-primary-600 hover:text-primary-800"
+                        @click="clearAnimalUploadSelection"
+                      >
+                        Remover
+                      </button>
+                    </div>
+                    <img
+                      v-if="animalUploadPreviewUrl"
+                      :src="animalUploadPreviewUrl"
+                      :alt="animalUploadPreviewAlt"
+                      class="mt-3 h-32 w-full rounded-md object-cover"
+                    />
+                  </div>
+
                   <p v-if="shouldShowAnimalFieldError('imageUrl')" id="animal-image-url-error" class="mt-1 text-sm text-error-500">
                     {{ animalFieldErrors.imageUrl }}
                   </p>
