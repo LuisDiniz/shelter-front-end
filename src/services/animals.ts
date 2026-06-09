@@ -81,7 +81,7 @@ export const fetchAnimals = async (): Promise<Animal[]> => {
 }
 
 export const fetchAnimal = async (id: string): Promise<Animal> => {
-  const animal = await apiRequest<ApiAnimal>(`/api/animals/${id}/`)
+  const animal = await apiRequest<ApiAnimal>(`/api/animals/${id}`)
   return mapApiAnimal(animal)
 }
 
@@ -100,7 +100,7 @@ export const updateAnimal = async (
   animal: Partial<AnimalPayload>,
   token: string,
 ): Promise<Animal> => {
-  const updatedAnimal = await apiRequest<ApiAnimal>(`/api/animals/${id}/`, {
+  const updatedAnimal = await apiRequest<ApiAnimal>(`/api/animals/${id}`, {
     method: 'PATCH',
     body: buildAnimalRequestBody(animal),
     token,
@@ -110,7 +110,7 @@ export const updateAnimal = async (
 }
 
 export const deleteAnimal = async (id: string, token: string): Promise<void> => {
-  await apiRequest<void>(`/api/animals/${id}/`, {
+  await apiRequest<void>(`/api/animals/${id}`, {
     method: 'DELETE',
     token,
   })
