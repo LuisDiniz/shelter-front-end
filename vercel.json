@@ -9,8 +9,8 @@
       "destination": "https://shelter-back-end.vercel.app/api/animals/:animalId"
     },
     {
-      "source": "/api/auth/:path*",
-      "destination": "https://shelter-back-end.vercel.app/api/auth/:path*"
+      "source": "/api/auth/token/",
+      "destination": "https://shelter-back-end.vercel.app/api/auth/token/"
     }
   ],
   "routes": [
