@@ -647,7 +647,7 @@ const handleLogout = () => {
                 <!-- Images -->
                 <div class="md:col-span-2">
                   <label class="block text-sm font-medium text-secondary-700 mb-1">
-                    Imagens <span class="text-error-500">*</span>
+                    Adicionar Imagens <span class="text-error-500">*</span>
                   </label>
                   <input
                     id="animalImageFile"
