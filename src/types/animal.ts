@@ -9,11 +9,16 @@ export interface Animal {
   age: number
   description: string
   breed: string
-  imageUrl: string
+  coverImageUrl: string
+  images: string[]
   medicalHistory: string
   vaccinations: string
   admissionDate: string
 }
+
+export type AnimalImagePayload =
+  | { url: string; isCover: boolean }
+  | { file: File; isCover: boolean }
 
 export interface AnimalPayload {
   name: string
@@ -22,8 +27,7 @@ export interface AnimalPayload {
   age: number
   description: string
   breed: string
-  imageUrl: string
-  imageFile?: File | null
+  images: AnimalImagePayload[]
   medicalHistory: string
   vaccinations: string
 }

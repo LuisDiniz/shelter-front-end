@@ -9,7 +9,8 @@ interface ApiAnimal {
   age: number
   gender: Gender
   description: string
-  image_url: string
+  images: string[]
+  cover_image_url: string
   medical_history: string | null
   vaccinations: string | null
   admission_date: string
@@ -22,26 +23,38 @@ interface ApiAnimalPayload {
   age: number
   gender: Gender
   description: string
-  image_url: string
+  images: ApiAnimalImageManifest[]
   medical_history: string
   vaccinations: string
 }
 
+interface ApiAnimalImageManifest {
+  url?: string
+  file_key?: string
+  is_cover: boolean
+}
+
 const defaultAnimalImageUrl = new URL('../assets/logo.png', import.meta.url).href
 
-const mapApiAnimal = (animal: ApiAnimal): Animal => ({
-  id: animal.id.toString(),
-  name: animal.name,
-  species: animal.species,
-  gender: animal.gender,
-  age: animal.age,
-  description: animal.description || '',
-  breed: animal.breed || '',
-  imageUrl: animal.image_url || defaultAnimalImageUrl,
-  medicalHistory: animal.medical_history || '',
-  vaccinations: animal.vaccinations || '',
-  admissionDate: animal.admission_date,
-})
+const mapApiAnimal = (animal: ApiAnimal): Animal => {
+  const images = (animal.images || []).filter(Boolean)
+  const coverImageUrl = animal.cover_image_url || images[0] || defaultAnimalImageUrl
+
+  return {
+    id: animal.id.toString(),
+    name: animal.name,
+    species: animal.species,
+    gender: animal.gender,
+    age: animal.age,
+    description: animal.description || '',
+    breed: animal.breed || '',
+    coverImageUrl,
+    images,
+    medicalHistory: animal.medical_history || '',
+    vaccinations: animal.vaccinations || '',
+    admissionDate: animal.admission_date,
+  }
+}
 
 const mapAnimalPayload = (animal: Partial<AnimalPayload>): Partial<ApiAnimalPayload> => {
   const payload: Partial<ApiAnimalPayload> = {}
@@ -52,7 +65,6 @@ const mapAnimalPayload = (animal: Partial<AnimalPayload>): Partial<ApiAnimalPayl
   if (animal.age !== undefined) payload.age = animal.age
   if (animal.gender !== undefined) payload.gender = animal.gender
   if (animal.description !== undefined) payload.description = animal.description
-  if (animal.imageUrl !== undefined) payload.image_url = animal.imageUrl
   if (animal.medicalHistory !== undefined) payload.medical_history = animal.medicalHistory
   if (animal.vaccinations !== undefined) payload.vaccinations = animal.vaccinations
 
@@ -60,17 +72,54 @@ const mapAnimalPayload = (animal: Partial<AnimalPayload>): Partial<ApiAnimalPayl
 }
 
 const buildAnimalRequestBody = (animal: Partial<AnimalPayload>): Partial<ApiAnimalPayload> | FormData => {
-  if (!animal.imageFile) {
-    return mapAnimalPayload(animal)
+  const images = animal.images || []
+  const hasImageFiles = images.some(image => 'file' in image)
+  const imageManifest: ApiAnimalImageManifest[] = images.map((image, index) => {
+    if ('file' in image) {
+      return {
+        file_key: `image_${index}`,
+        is_cover: image.isCover,
+      }
+    }
+
+    return {
+      url: image.url,
+      is_cover: image.isCover,
+    }
+  })
+
+  if (!hasImageFiles) {
+    const payload = mapAnimalPayload(animal)
+
+    if (animal.images !== undefined) {
+      payload.images = imageManifest
+    }
+
+    return payload
   }
 
-  const payload = mapAnimalPayload(animal)
+  const payload = {
+    ...mapAnimalPayload(animal),
+    images: imageManifest,
+  }
   const formData = new FormData()
 
   Object.entries(payload).forEach(([key, value]) => {
-    if (value !== undefined) formData.append(key, String(value))
+    if (value === undefined) return
+
+    if (key === 'images') {
+      formData.append(key, JSON.stringify(value))
+      return
+    }
+
+    formData.append(key, String(value))
   })
-  formData.append('image_file', animal.imageFile)
+
+  images.forEach((image, index) => {
+    if ('file' in image) {
+      formData.append(`image_${index}`, image.file)
+    }
+  })
 
   return formData
 }

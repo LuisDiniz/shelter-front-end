@@ -21,7 +21,11 @@ const animalSpecies = computed(() => {
 })
 
 const carouselImages = computed(() => {
-  return animal.value ? [animal.value.imageUrl] : []
+  if (!animal.value) return []
+
+  return animal.value.images.length
+    ? animal.value.images
+    : [animal.value.coverImageUrl]
 })
 
 onMounted(async () => {
