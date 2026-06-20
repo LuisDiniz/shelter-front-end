@@ -27,7 +27,7 @@ const viewDetails = () => {
   <div class="card group cursor-pointer transition-shadow hover:shadow-lg" @click="viewDetails">
     <div class="relative overflow-hidden h-60">
       <img
-        :src="animal.imageUrl"
+        :src="animal.coverImageUrl"
         :alt="animal.name"
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
       />

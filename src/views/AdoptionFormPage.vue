@@ -137,7 +137,7 @@ const onSubmit = handleSubmit(async (values) => {
             <!-- Animal Information -->
             <div v-if="animal" class="mb-8 flex items-center">
               <img
-                :src="animal.imageUrl"
+                :src="animal.coverImageUrl"
                 :alt="animal.name"
                 class="w-20 h-20 rounded-full object-cover mr-4 border-2 border-primary-500"
               />
